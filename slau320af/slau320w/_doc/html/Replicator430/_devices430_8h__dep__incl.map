@@ -1,0 +1,5 @@
+<map id="Devices430.h" name="Devices430.h">
+<area shape="rect" id="node2" href="$_devices430_8c.html" title="The file contains functions to distinguish MSP430 devices. " alt="" coords="5,80,104,107"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html" title="JTAG Control Sequences for Erasing / Programming / Fuse Burning. " alt="" coords="129,80,239,107"/>
+<area shape="rect" id="node4" href="$_replicator430_8c.html" title="JTAG Replicator for the MSP430 Flash&#45;based family. " alt="" coords="264,80,376,107"/>
+</map>

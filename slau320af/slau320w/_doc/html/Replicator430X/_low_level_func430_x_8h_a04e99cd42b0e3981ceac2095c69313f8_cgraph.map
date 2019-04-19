@@ -1,0 +1,9 @@
+<map id="ShowStatus" name="ShowStatus">
+<area shape="rect" id="node2" href="$_low_level_func430_x_8c.html#a12029fb9b06a281c4f0580057193b3ed" title="Release Target Board (switch voltages off, JTAG pins are HI&#45;Z) " alt="" coords="145,76,251,103"/>
+<area shape="rect" id="node3" href="$_low_level_func430_x_8c.html#a95e9bde7d2ec5849dc7c45b125947418" title="Release I/O pins. " alt="" coords="307,44,391,71"/>
+<area shape="rect" id="node8" href="$_low_level_func430_x_8c.html#a0a1fbe8f14a9de5f57d970f1fdb3b054" title="Set target Vcc (supplied from REP430F) " alt="" coords="299,107,400,133"/>
+<area shape="rect" id="node4" href="$_low_level_func430_x_8c.html#a030c736a69b3f26ea17ae44bdd0424ca" title="function to set the fuse blow voltage Vpp " alt="" coords="455,31,520,57"/>
+<area shape="rect" id="node5" href="$_low_level_func430_x_8c.html#ab89970e6915f563b3f077b105cbb8a92" title="Disable fuse blow voltage Vpp. " alt="" coords="575,5,669,32"/>
+<area shape="rect" id="node7" href="$_low_level_func430_x_8c.html#a9565ba4526e70a2ea30623261f753171" title="Set all JTAG pins to input direction &#45; from target to REP430F. " alt="" coords="448,81,527,108"/>
+<area shape="rect" id="node6" href="$_low_level_func430_x_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="585,81,659,108"/>
+</map>

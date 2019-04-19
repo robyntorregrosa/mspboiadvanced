@@ -1,0 +1,5 @@
+<map id="DisableMpu_430Xv2" name="DisableMpu_430Xv2">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_f_r_8c.html#a893ed3d2364c86c502002b20e1c1d37e" title="This function reads one byte/word from a given address in memory. " alt="" coords="191,5,319,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_xv2_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="368,31,441,57"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_f_r_8c.html#a4dc5eeb43a998383b7dbb210de115b00" title="This function writes one byte/word at a given address ( &lt;0xA00) " alt="" coords="191,107,320,133"/>
+</map>

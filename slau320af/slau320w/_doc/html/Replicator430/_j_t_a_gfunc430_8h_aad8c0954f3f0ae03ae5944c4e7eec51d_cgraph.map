@@ -1,0 +1,16 @@
+<map id="GetDevice" name="GetDevice">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_8c.html#a6ffb558ce271a7cf107ed0410c105eea" title="This function checks if the JTAG access security fuse is blown. " alt="" coords="558,296,654,323"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html#ac41af9d0a8762d2c5478f0ed55067106" title="Function for shifting a new instruction into the JTAG instruction register through TDI (MSB first..." alt="" coords="714,213,781,240"/>
+<area shape="rect" id="node8" href="$_j_t_a_gfunc430_8c.html#ada75da8efa714dd6539b255a8318c02b" title="Function for shifting a given 16&#45;bit word into the JTAG data register through TDI. " alt="" coords="704,429,791,456"/>
+<area shape="rect" id="node9" href="$_j_t_a_gfunc430_8c.html#a6adbbe70a69f48adb08c17888e651cdd" title="This function reads one byte/word from a given address in memory. " alt="" coords="282,397,363,424"/>
+<area shape="rect" id="node13" href="$_devices430_8c.html#a38e37c3fc7b26a65133c1c563f62fccc" title="This function accepts a Device ID and extracts the corresponding device information from the sDeviceF..." alt="" coords="144,701,224,728"/>
+<area shape="rect" id="node14" href="$_j_t_a_gfunc430_8c.html#acaf182245748d7464b578a31bbb232aa" title="Function to execute a Power&#45;On Reset (POR) using JTAG CNTRL SIG register. " alt="" coords="135,347,233,373"/>
+<area shape="rect" id="node4" href="$_low_level_func430_8c.html#aa6d5ca606d46151af3e1589f8c5ac553" title="Combination of SBW macros: TMS high, TDI high, no TDO read. " alt="" coords="977,264,1071,291"/>
+<area shape="rect" id="node5" href="$_low_level_func430_8c.html#a7811442d40a43fab4ab7d40d06a6b4a2" title="Combination of SBW macros: TMS high, TDI low, no TDO read. " alt="" coords="839,340,929,367"/>
+<area shape="rect" id="node6" href="$_low_level_func430_8c.html#a35db0a1ca79acdda902d59905f1fd35e" title="Combination of SBW macros: TMS low, TDI high, no TDO read. " alt="" coords="979,315,1069,341"/>
+<area shape="rect" id="node7" href="$_low_level_func430_8c.html#a402a8d2e7bd548421d034aa918ff9431" title="Shift a value into TDI (MSB first) and simultaneously shift out a value from TDO (MSB first)..." alt="" coords="860,289,908,316"/>
+<area shape="rect" id="node10" href="$_j_t_a_gfunc430_8c.html#aefba12aecd47bb343663e3ac1e7b5c73" title="Function to set the CPU into a controlled stop state. " alt="" coords="424,448,496,475"/>
+<area shape="rect" id="node12" href="$_j_t_a_gfunc430_8c.html#ada7d193e5b24e3ae35be9ce0717b1c81" title="Function to release the target CPU from the controlled stop state. " alt="" coords="412,347,508,373"/>
+<area shape="rect" id="node11" href="$_j_t_a_gfunc430_8c.html#a013242d6ff5caaf00d979e295a4f24b3" title="Function to set target CPU JTAG FSM into the instruction fetch state. " alt="" coords="556,448,656,475"/>
+<area shape="rect" id="node15" href="$_j_t_a_gfunc430_8c.html#a8a3bca30e99d664ac94524d6c715fd4c" title="This function writes one byte/word at a given address ( &lt;0xA00) " alt="" coords="281,347,364,373"/>
+</map>

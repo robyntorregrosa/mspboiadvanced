@@ -1,0 +1,9 @@
+<map id="WriteFLASHallSections" name="WriteFLASHallSections">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_8c.html#a71e34f38793b56d1c57a96df9bea81dc" title="This function programs/verifies an array of words into the FLASH memory by using the FLASH controller..." alt="" coords="212,103,307,130"/>
+<area shape="rect" id="node8" href="$_j_t_a_gfunc430_8c.html#acf8a985dce8c41bf49f29c6dbe96dc71" title="This function performs a Verification over the given memory range. " alt="" coords="217,154,301,180"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html#aefba12aecd47bb343663e3ac1e7b5c73" title="Function to set the CPU into a controlled stop state. " alt="" coords="355,71,427,98"/>
+<area shape="rect" id="node5" href="$_j_t_a_gfunc430_8c.html#ac41af9d0a8762d2c5478f0ed55067106" title="Function for shifting a new instruction into the JTAG instruction register through TDI (MSB first..." alt="" coords="633,20,699,47"/>
+<area shape="rect" id="node6" href="$_j_t_a_gfunc430_8c.html#ada75da8efa714dd6539b255a8318c02b" title="Function for shifting a given 16&#45;bit word into the JTAG data register through TDI. " alt="" coords="623,122,709,148"/>
+<area shape="rect" id="node7" href="$_j_t_a_gfunc430_8c.html#ada7d193e5b24e3ae35be9ce0717b1c81" title="Function to release the target CPU from the controlled stop state. " alt="" coords="477,147,573,174"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_8c.html#a013242d6ff5caaf00d979e295a4f24b3" title="Function to set target CPU JTAG FSM into the instruction fetch state. " alt="" coords="475,46,575,72"/>
+</map>

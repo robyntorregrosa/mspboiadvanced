@@ -1,0 +1,7 @@
+<map id="Config430.h" name="Config430.h">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_8h.html" title="JTAG Function Prototypes and Definitions. " alt="" coords="79,80,189,107"/>
+<area shape="rect" id="node6" href="$_low_level_func430_8h.html" title="Low Level function prototypes, macros, and pin&#45;to&#45;signal assignments regarding to user&#39;s hardware..." alt="" coords="213,80,348,107"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html" title="JTAG Control Sequences for Erasing / Programming / Fuse Burning. " alt="" coords="5,155,116,181"/>
+<area shape="rect" id="node4" href="$_low_level_func430_8c.html" title="Low Level Functions regarding user&#39;s Hardware. " alt="" coords="140,155,275,181"/>
+<area shape="rect" id="node5" href="$_replicator430_8c.html" title="JTAG Replicator for the MSP430 Flash&#45;based family. " alt="" coords="299,155,411,181"/>
+</map>

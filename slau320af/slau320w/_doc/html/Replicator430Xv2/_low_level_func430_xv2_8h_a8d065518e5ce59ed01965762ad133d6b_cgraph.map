@@ -1,0 +1,7 @@
+<map id="configure_IO_JTAG" name="configure_IO_JTAG">
+<area shape="rect" id="node2" href="$_low_level_func430_xv2_8c.html#a32af18702f8ba7043cd25370fd2826fc" title="Set the direction for the TDI pin. " alt="" coords="193,5,255,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_xv2_8c.html#a612089f3f2c7f08073cb622b042a7282" title="Set the direction for the TEST pin. " alt="" coords="187,56,261,83"/>
+<area shape="rect" id="node4" href="$_low_level_func430_xv2_8c.html#a4e0c0842bd99f0efb99662a4aea933ae" title="Set the direction for the TMS pin. " alt="" coords="189,107,259,133"/>
+<area shape="rect" id="node5" href="$_low_level_func430_xv2_8c.html#aa2d16568a7b352f5270c7fbcce4299a2" title="Set the direction for the RST pin. " alt="" coords="190,157,258,184"/>
+<area shape="rect" id="node6" href="$_low_level_func430_xv2_8c.html#a57b887301d6a3de470c450731a5130be" title="Set the direction for the TCK pin. " alt="" coords="190,208,258,235"/>
+</map>

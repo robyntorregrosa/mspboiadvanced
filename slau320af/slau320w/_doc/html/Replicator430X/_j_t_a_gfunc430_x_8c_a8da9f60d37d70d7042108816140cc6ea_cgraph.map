@@ -1,0 +1,4 @@
+<map id="VerifyPSA_430X" name="VerifyPSA_430X">
+<area shape="rect" id="node2" href="$_devices430_x_8c.html#a1878f4cbfee99433a6c22a65fd0b6a0d" title="Function to check if current device supports EnhVerify. " alt="" coords="171,5,317,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_x_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="207,56,281,83"/>
+</map>

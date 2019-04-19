@@ -1,0 +1,9 @@
+<map id="ProgramLockKey" name="ProgramLockKey">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_f_r_8c.html#a0617a834cbc78f9f6af17b37b2e90090" title="This function writes an array of words into the target memory. " alt="" coords="176,5,339,32"/>
+<area shape="rect" id="node4" href="$_low_level_func430_xv2_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="221,56,294,83"/>
+<area shape="rect" id="node5" href="$_j_t_a_gfunc430_f_r_8c.html#ae38a50fd1b1da711ccf313a64c986b94" title="Function to take target device under JTAG control. Disables the target watchdog. Sets the global DEVI..." alt="" coords="193,107,321,133"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_f_r_8c.html#a4dc5eeb43a998383b7dbb210de115b00" title="This function writes one byte/word at a given address ( &lt;0xA00) " alt="" coords="403,5,533,32"/>
+<area shape="rect" id="node6" href="$_j_t_a_gfunc430_f_r_8c.html#aa296894ac8eefaeff2a7ec4791d8deaf" title="This function checks if the JTAG lock key is programmed. " alt="" coords="389,56,547,83"/>
+<area shape="rect" id="node7" href="$_j_t_a_gfunc430_f_r_8c.html#aaaf238430b0ac832fa7e8b66aac94a37" title="Function to determine &amp; compare core identification info (Xv2) " alt="" coords="413,107,523,133"/>
+<area shape="rect" id="node8" href="$_j_t_a_gfunc430_f_r_8c.html#aab8e87fbfbe493201c54711a2775fe79" title="This function reads an array of words from the memory. " alt="" coords="387,157,549,184"/>
+</map>

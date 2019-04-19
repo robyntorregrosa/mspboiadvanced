@@ -1,0 +1,5 @@
+<map id="ResetTAP" name="ResetTAP">
+<area shape="rect" id="node2" href="$_low_level_func430_8c.html#aa6d5ca606d46151af3e1589f8c5ac553" title="Combination of SBW macros: TMS high, TDI high, no TDO read. " alt="" coords="135,5,228,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_8c.html#a35db0a1ca79acdda902d59905f1fd35e" title="Combination of SBW macros: TMS low, TDI high, no TDO read. " alt="" coords="136,56,227,83"/>
+<area shape="rect" id="node4" href="$_low_level_func430_8c.html#aa0e166db636c781186870eb0c3a3de00" title="Delay function (resolution is ~1 us) " alt="" coords="147,107,216,133"/>
+</map>

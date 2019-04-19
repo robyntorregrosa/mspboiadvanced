@@ -1,0 +1,4 @@
+<map id="configure_IO_SBW" name="configure_IO_SBW">
+<area shape="rect" id="node2" href="$_low_level_func430_xv2_8c.html#a4e80d32bdbbd37edc941ad78064b2314" title="Set the direction for the TDO pin. " alt="" coords="185,5,257,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_xv2_8c.html#a57b887301d6a3de470c450731a5130be" title="Set the direction for the TCK pin. " alt="" coords="187,56,255,83"/>
+</map>

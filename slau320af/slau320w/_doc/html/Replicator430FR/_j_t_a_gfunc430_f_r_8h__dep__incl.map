@@ -1,0 +1,5 @@
+<map id="JTAGfunc430FR.h" name="JTAGfunc430FR.h">
+<area shape="rect" id="node2" href="$_j_s_b_w_8c.html" title="4&#45;wire JTAG emulation using Spy&#45;Bi&#45;Wire for LPM5 wakeup of an FRAM device " alt="" coords="5,80,76,107"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_f_r_8c.html" title="JTAG Control Sequences for Erasing / Programming / Fuse Programming. " alt="" coords="100,80,227,107"/>
+<area shape="rect" id="node4" href="$_replicator430_f_r_8c.html" title="JTAG Replicator for FRAM&#45;based MSP430 devices. " alt="" coords="251,80,380,107"/>
+</map>

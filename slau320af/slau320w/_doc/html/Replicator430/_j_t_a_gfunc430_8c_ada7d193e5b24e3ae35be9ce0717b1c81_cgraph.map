@@ -1,0 +1,13 @@
+<map id="ReleaseCPU" name="ReleaseCPU">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_8c.html#ac41af9d0a8762d2c5478f0ed55067106" title="Function for shifting a new instruction into the JTAG instruction register through TDI (MSB first..." alt="" coords="159,121,226,148"/>
+<area shape="rect" id="node12" href="$_j_t_a_gfunc430_8c.html#ada75da8efa714dd6539b255a8318c02b" title="Function for shifting a given 16&#45;bit word into the JTAG data register through TDI. " alt="" coords="149,70,236,97"/>
+<area shape="rect" id="node3" href="$_low_level_func430_8c.html#aa6d5ca606d46151af3e1589f8c5ac553" title="Combination of SBW macros: TMS high, TDI high, no TDO read. " alt="" coords="445,70,538,97"/>
+<area shape="rect" id="node4" href="$_low_level_func430_8c.html#a7811442d40a43fab4ab7d40d06a6b4a2" title="Combination of SBW macros: TMS high, TDI low, no TDO read. " alt="" coords="284,70,375,97"/>
+<area shape="rect" id="node5" href="$_low_level_func430_8c.html#a35db0a1ca79acdda902d59905f1fd35e" title="Combination of SBW macros: TMS low, TDI high, no TDO read. " alt="" coords="446,121,537,148"/>
+<area shape="rect" id="node6" href="$_low_level_func430_8c.html#a402a8d2e7bd548421d034aa918ff9431" title="Shift a value into TDI (MSB first) and simultaneously shift out a value from TDO (MSB first)..." alt="" coords="305,222,353,249"/>
+<area shape="rect" id="node7" href="$_low_level_func430_8c.html#a96ef6f3796a6d800dd6d4a97679d952c" title="Combination of SBW macros: TMS high, TDI low, TDO read. " alt="" coords="424,172,559,198"/>
+<area shape="rect" id="node8" href="$_low_level_func430_8c.html#a944770cc6b3cbcaa04d9da6023b8ddee" title="Combination of SBW macros: TMS high, TDI high, TDO read. " alt="" coords="423,222,560,249"/>
+<area shape="rect" id="node9" href="$_low_level_func430_8c.html#ad6fee6327c5792a62add5d681ebf9b1d" title="Combination of SBW macros: TMS low, TDI low, TDO read. " alt="" coords="425,273,558,300"/>
+<area shape="rect" id="node10" href="$_low_level_func430_8c.html#aa540cf8f139c4257139a2db758382b63" title="Combination of SBW macros: TMS low, TDI high, TDO read. " alt="" coords="424,324,559,350"/>
+<area shape="rect" id="node11" href="$_low_level_func430_8c.html#a74cae5ca02bed438e965fad953b75dd3" title="Combination of SBW macros: TMS low, TDI low, no TDO read. " alt="" coords="447,374,536,401"/>
+</map>

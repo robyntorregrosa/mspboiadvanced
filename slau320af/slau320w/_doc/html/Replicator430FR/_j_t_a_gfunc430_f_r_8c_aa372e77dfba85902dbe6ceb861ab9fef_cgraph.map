@@ -1,0 +1,6 @@
+<map id="EraseFRAM_430Xv2" name="EraseFRAM_430Xv2">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_f_r_8c.html#a0617a834cbc78f9f6af17b37b2e90090" title="This function writes an array of words into the target memory. " alt="" coords="193,5,356,32"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_f_r_8c.html#a4dc5eeb43a998383b7dbb210de115b00" title="This function writes one byte/word at a given address ( &lt;0xA00) " alt="" coords="404,31,533,57"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_f_r_8c.html#a571eef352b046ebe5491755e23a087f3" title="Function to release the target device from JTAG control. " alt="" coords="197,107,352,133"/>
+<area shape="rect" id="node5" href="$_low_level_func430_xv2_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="432,107,505,133"/>
+</map>

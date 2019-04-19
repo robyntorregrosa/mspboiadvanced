@@ -1,0 +1,11 @@
+<map id="IR_Shift" name="IR_Shift">
+<area shape="rect" id="node2" href="$_low_level_func430_8c.html#aa6d5ca606d46151af3e1589f8c5ac553" title="Combination of SBW macros: TMS high, TDI high, no TDO read. " alt="" coords="281,5,374,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_8c.html#a7811442d40a43fab4ab7d40d06a6b4a2" title="Combination of SBW macros: TMS high, TDI low, no TDO read. " alt="" coords="120,157,211,184"/>
+<area shape="rect" id="node4" href="$_low_level_func430_8c.html#a35db0a1ca79acdda902d59905f1fd35e" title="Combination of SBW macros: TMS low, TDI high, no TDO read. " alt="" coords="282,56,373,83"/>
+<area shape="rect" id="node5" href="$_low_level_func430_8c.html#a402a8d2e7bd548421d034aa918ff9431" title="Shift a value into TDI (MSB first) and simultaneously shift out a value from TDO (MSB first)..." alt="" coords="141,107,189,133"/>
+<area shape="rect" id="node6" href="$_low_level_func430_8c.html#a96ef6f3796a6d800dd6d4a97679d952c" title="Combination of SBW macros: TMS high, TDI low, TDO read. " alt="" coords="260,157,395,184"/>
+<area shape="rect" id="node7" href="$_low_level_func430_8c.html#a944770cc6b3cbcaa04d9da6023b8ddee" title="Combination of SBW macros: TMS high, TDI high, TDO read. " alt="" coords="259,208,396,235"/>
+<area shape="rect" id="node8" href="$_low_level_func430_8c.html#ad6fee6327c5792a62add5d681ebf9b1d" title="Combination of SBW macros: TMS low, TDI low, TDO read. " alt="" coords="261,259,394,285"/>
+<area shape="rect" id="node9" href="$_low_level_func430_8c.html#aa540cf8f139c4257139a2db758382b63" title="Combination of SBW macros: TMS low, TDI high, TDO read. " alt="" coords="260,309,395,336"/>
+<area shape="rect" id="node10" href="$_low_level_func430_8c.html#a74cae5ca02bed438e965fad953b75dd3" title="Combination of SBW macros: TMS low, TDI low, no TDO read. " alt="" coords="283,107,372,133"/>
+</map>

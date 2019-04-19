@@ -1,0 +1,28 @@
+; http://srecord.sourceforge.net/
+        PUBLIC  eprom
+        RSEG    CODE
+eprom
+        DW      0x4031,0x0280,0x40B2,0x5A80,0x015C,0xD3D2,0x0204,0xE3D2
+        DW      0x0202,0x403F,0xC350,0x831F,0x23FE,0x3FF9,0xFC00
+
+        PUBLIC  eprom_address
+eprom_address
+        //DL      0x0000C200, 0x0000FFFE
+        DL      0x0000FC00, 0x0000FFFE
+        //DL      0x00005C00, 0x00025BFF
+        //DL      0x00008000, 0x00047FFF
+        
+                                            
+
+        PUBLIC  eprom_length_of_sections
+eprom_length_of_sections
+        DL      0x0000000E, 0x00000001
+
+        PUBLIC  eprom_sections
+eprom_sections
+        //DL      0x2B24
+        DL      0x2
+; upper bound = 0x10000
+; lower bound = 0xFC00
+; length =      0x0400
+        END

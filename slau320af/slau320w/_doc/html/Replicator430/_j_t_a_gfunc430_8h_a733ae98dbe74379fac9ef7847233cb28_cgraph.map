@@ -1,0 +1,8 @@
+<map id="EraseFLASH" name="EraseFLASH">
+<area shape="rect" id="node2" href="$_devices430_8c.html#aac6678b56dd20f8a2fcdb95690d02f53" title="Function to check if current device supports FastFlash. " alt="" coords="152,5,300,32"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html#aefba12aecd47bb343663e3ac1e7b5c73" title="Function to set the CPU into a controlled stop state. " alt="" coords="190,157,262,184"/>
+<area shape="rect" id="node5" href="$_j_t_a_gfunc430_8c.html#ac41af9d0a8762d2c5478f0ed55067106" title="Function for shifting a new instruction into the JTAG instruction register through TDI (MSB first..." alt="" coords="506,132,573,159"/>
+<area shape="rect" id="node6" href="$_j_t_a_gfunc430_8c.html#ada75da8efa714dd6539b255a8318c02b" title="Function for shifting a given 16&#45;bit word into the JTAG data register through TDI. " alt="" coords="496,233,583,260"/>
+<area shape="rect" id="node7" href="$_j_t_a_gfunc430_8c.html#ada7d193e5b24e3ae35be9ce0717b1c81" title="Function to release the target CPU from the controlled stop state. " alt="" coords="350,259,446,285"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_8c.html#a013242d6ff5caaf00d979e295a4f24b3" title="Function to set target CPU JTAG FSM into the instruction fetch state. " alt="" coords="348,157,448,184"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$_replicator430_xv2_8c.html#ab217725b8d66a75395b69d75f3147a57" title="The basic Replicator routine. " alt="" coords="104,196,204,223"/>
+<area shape="rect" id="node3" href="$_low_level_func430_xv2_8c.html#a953a0c4d0b38571f40c3082fa7f13504" title="Initialization of the Controller Board. " alt="" coords="397,107,492,133"/>
+<area shape="rect" id="node9" href="$_low_level_func430_xv2_8c.html#a90ff9178ed6b885d9e704ab67f9dd6d2" title="This function controls the status LEDs depending on the status argument. It stops program in error ca..." alt="" coords="252,247,344,273"/>
+<area shape="rect" id="node11" href="$_low_level_func430_xv2_8c.html#a80c580070ae6fb4bda47408e486401a2" title="Initialization of the Target Board (switch voltages on, preset JTAG pins) " alt="" coords="261,196,335,223"/>
+<area shape="rect" id="node4" href="$_low_level_func430_xv2_8c.html#a68707969689c7b18ea997d05eb1844a7" title="Function to set a specific voltage level via the PMM. " alt="" coords="549,56,643,83"/>
+<area shape="rect" id="node5" href="$_low_level_func430_xv2_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="695,157,768,184"/>
+<area shape="rect" id="node6" href="$_low_level_func430_xv2_8c.html#aa0e166db636c781186870eb0c3a3de00" title="Delay function (resolution is ~1 us) " alt="" coords="561,5,631,32"/>
+<area shape="rect" id="node7" href="$_low_level_func430_xv2_8c.html#a0a1fbe8f14a9de5f57d970f1fdb3b054" title="Set target Vcc (supplied from REP430F) " alt="" coords="545,208,647,235"/>
+<area shape="rect" id="node8" href="$_low_level_func430_xv2_8c.html#a030c736a69b3f26ea17ae44bdd0424ca" title="function to set the fuse blow voltage Vpp " alt="" coords="563,157,629,184"/>
+<area shape="rect" id="node10" href="$_low_level_func430_xv2_8c.html#a12029fb9b06a281c4f0580057193b3ed" title="Release Target Board (switch voltages off, JTAG pins are HI&#45;Z) " alt="" coords="392,259,497,285"/>
+<area shape="rect" id="node12" href="$_low_level_func430_xv2_8c.html#a35ba0ea901f5df9cef88057703d76c58" title="Set up I/O pins for JTAG communication. " alt="" coords="403,157,486,184"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="WriteMemQuick" name="WriteMemQuick">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_8c.html#a9891571018171c24e63888ec7dbac225" title="Load a given address into the target CPU&#39;s program counter (PC). " alt="" coords="175,180,235,207"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_8c.html#ac41af9d0a8762d2c5478f0ed55067106" title="Function for shifting a new instruction into the JTAG instruction register through TDI (MSB first..." alt="" coords="447,79,514,105"/>
+<area shape="rect" id="node5" href="$_j_t_a_gfunc430_8c.html#ada75da8efa714dd6539b255a8318c02b" title="Function for shifting a given 16&#45;bit word into the JTAG data register through TDI. " alt="" coords="437,231,524,257"/>
+<area shape="rect" id="node6" href="$_j_t_a_gfunc430_8c.html#aefba12aecd47bb343663e3ac1e7b5c73" title="Function to set the CPU into a controlled stop state. " alt="" coords="169,231,241,257"/>
+<area shape="rect" id="node7" href="$_j_t_a_gfunc430_8c.html#ada7d193e5b24e3ae35be9ce0717b1c81" title="Function to release the target CPU from the controlled stop state. " alt="" coords="291,28,387,55"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_8c.html#a013242d6ff5caaf00d979e295a4f24b3" title="Function to set target CPU JTAG FSM into the instruction fetch state. " alt="" coords="289,231,389,257"/>
+</map>

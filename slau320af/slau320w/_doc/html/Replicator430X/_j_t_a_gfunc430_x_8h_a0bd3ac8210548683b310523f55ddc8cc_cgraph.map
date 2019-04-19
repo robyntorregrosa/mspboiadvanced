@@ -1,0 +1,4 @@
+<map id="EraseFLASH_430X" name="EraseFLASH_430X">
+<area shape="rect" id="node2" href="$_devices430_x_8c.html#aac6678b56dd20f8a2fcdb95690d02f53" title="Function to check if current device supports FastFlash. " alt="" coords="187,5,335,32"/>
+<area shape="rect" id="node3" href="$_low_level_func430_x_8c.html#af5002a1f9d068f00affad144b7207702" title="This function generates Amount strobes with the Flash Timing Generator. " alt="" coords="212,56,309,83"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="jsbwJtagUnlock" name="jsbwJtagUnlock">
+<area shape="rect" id="node2" href="$_j_s_b_w_8c.html#ab9788d0a257f79f63bfde8cdb53b6581" title="Function for shifting a new instruction into the JTAG instruction register through JSBW (MSB first..." alt="" coords="169,5,269,32"/>
+<area shape="rect" id="node4" href="$_low_level_func430_xv2_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="182,56,255,83"/>
+<area shape="rect" id="node5" href="$_j_s_b_w_8c.html#a28a018f7e00a28464e3237679e509300" title="Function for shifting data into the JTAG data register through JSBW (MSB first, but with interchanged..." alt="" coords="165,107,272,133"/>
+<area shape="rect" id="node3" href="$_j_s_b_w_8c.html#a1daee4d257f223675bf10e3610ccd9e7" title="Shift a value into TDI (MSB first) and simultaneously shift out a value from TDO (MSB first)..." alt="" coords="320,56,401,83"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GetDevice_430Xv2" name="GetDevice_430Xv2">
+<area shape="rect" id="node2" href="$_j_t_a_gfunc430_xv2_8c.html#aa296894ac8eefaeff2a7ec4791d8deaf" title="This function checks if the JTAG lock key is programmed. " alt="" coords="184,5,341,32"/>
+<area shape="rect" id="node3" href="$_j_t_a_gfunc430_xv2_8c.html#aaaf238430b0ac832fa7e8b66aac94a37" title="Function to determine &amp; compare core identification info (Xv2) " alt="" coords="208,56,317,83"/>
+<area shape="rect" id="node4" href="$_j_t_a_gfunc430_xv2_8c.html#aab8e87fbfbe493201c54711a2775fe79" title="This function reads an array of words from the memory. " alt="" coords="181,107,344,133"/>
+</map>

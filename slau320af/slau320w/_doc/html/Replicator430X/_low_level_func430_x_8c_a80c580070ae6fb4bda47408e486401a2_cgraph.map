@@ -1,0 +1,17 @@
+<map id="InitTarget" name="InitTarget">
+<area shape="rect" id="node2" href="$_low_level_func430_x_8c.html#a35ba0ea901f5df9cef88057703d76c58" title="Set up I/O pins for JTAG communication. " alt="" coords="137,233,220,260"/>
+<area shape="rect" id="node16" href="$_low_level_func430_x_8c.html#a0a1fbe8f14a9de5f57d970f1fdb3b054" title="Set target Vcc (supplied from REP430F) " alt="" coords="128,69,229,96"/>
+<area shape="rect" id="node3" href="$_low_level_func430_x_8c.html#a030c736a69b3f26ea17ae44bdd0424ca" title="function to set the fuse blow voltage Vpp " alt="" coords="311,132,377,159"/>
+<area shape="rect" id="node9" href="$_low_level_func430_x_8c.html#a9565ba4526e70a2ea30623261f753171" title="Set all JTAG pins to input direction &#45; from target to REP430F. " alt="" coords="305,284,383,311"/>
+<area shape="rect" id="node14" href="$_low_level_func430_x_8c.html#ab9377b92714527f9ce885993afad316b" title="Set SBW pins to output direction &#45; from REP430F to target. " alt="" coords="278,360,410,387"/>
+<area shape="rect" id="node15" href="$_low_level_func430_x_8c.html#a8d065518e5ce59ed01965762ad133d6b" title="Set JTAG pins to output direction &#45; from REP430F to target. " alt="" coords="277,233,411,260"/>
+<area shape="rect" id="node4" href="$_low_level_func430_x_8c.html#a32f133367889d7697985b7d649313669" title="Enable fuse blow voltage Vpp. " alt="" coords="460,107,552,133"/>
+<area shape="rect" id="node5" href="$_low_level_func430_x_8c.html#af5a5d817f300d89f41a28c02dd635fdc" title="Delay function (resolution is 1 ms) " alt="" coords="601,5,675,32"/>
+<area shape="rect" id="node6" href="$_low_level_func430_x_8c.html#ab89970e6915f563b3f077b105cbb8a92" title="Disable fuse blow voltage Vpp. " alt="" coords="459,56,553,83"/>
+<area shape="rect" id="node7" href="$_low_level_func430_x_8c.html#a612089f3f2c7f08073cb622b042a7282" title="Set the direction for the TEST pin. " alt="" coords="469,157,543,184"/>
+<area shape="rect" id="node8" href="$_low_level_func430_x_8c.html#a32af18702f8ba7043cd25370fd2826fc" title="Set the direction for the TDI pin. " alt="" coords="475,208,537,235"/>
+<area shape="rect" id="node10" href="$_low_level_func430_x_8c.html#a4e80d32bdbbd37edc941ad78064b2314" title="Set the direction for the TDO pin. " alt="" coords="470,411,542,437"/>
+<area shape="rect" id="node11" href="$_low_level_func430_x_8c.html#a4e0c0842bd99f0efb99662a4aea933ae" title="Set the direction for the TMS pin. " alt="" coords="471,259,541,285"/>
+<area shape="rect" id="node12" href="$_low_level_func430_x_8c.html#aa2d16568a7b352f5270c7fbcce4299a2" title="Set the direction for the RST pin. " alt="" coords="472,309,540,336"/>
+<area shape="rect" id="node13" href="$_low_level_func430_x_8c.html#a57b887301d6a3de470c450731a5130be" title="Set the direction for the TCK pin. " alt="" coords="472,360,540,387"/>
+</map>
