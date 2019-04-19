@@ -914,42 +914,39 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <library name="gameconsole">
 <packages>
 <package name="DISPLAY_128_64">
-<pad name="P$3" x="-17.145" y="0" drill="0.508"/>
-<pad name="P$4" x="-15.875" y="0" drill="0.508"/>
-<pad name="P$5" x="-14.605" y="0" drill="0.508"/>
-<pad name="P$6" x="-13.335" y="0" drill="0.508"/>
-<pad name="P$7" x="-12.065" y="0" drill="0.508"/>
-<pad name="P$8" x="-10.795" y="0" drill="0.508"/>
-<pad name="P$9" x="-9.525" y="0" drill="0.508"/>
-<pad name="P$10" x="-8.255" y="0" drill="0.508"/>
-<pad name="P$11" x="-6.985" y="0" drill="0.508"/>
-<pad name="P$12" x="-5.715" y="0" drill="0.508"/>
-<pad name="P$13" x="-4.445" y="0" drill="0.508"/>
-<pad name="P$14" x="-3.175" y="0" drill="0.508"/>
-<pad name="P$15" x="-1.905" y="0" drill="0.508"/>
-<pad name="P$16" x="-0.635" y="0" drill="0.508"/>
-<pad name="P$17" x="0.635" y="0" drill="0.508"/>
-<pad name="P$18" x="1.905" y="0" drill="0.508"/>
-<pad name="P$19" x="3.175" y="0" drill="0.508"/>
-<pad name="P$20" x="4.445" y="0" drill="0.508"/>
-<pad name="P$21" x="5.715" y="0" drill="0.508"/>
-<pad name="P$22" x="6.985" y="0" drill="0.508"/>
-<pad name="P$23" x="8.255" y="0" drill="0.508"/>
-<pad name="P$24" x="9.525" y="0" drill="0.508"/>
-<pad name="P$25" x="10.795" y="0" drill="0.508"/>
-<pad name="P$26" x="12.065" y="0" drill="0.508"/>
-<pad name="P$27" x="13.335" y="0" drill="0.508"/>
-<pad name="P$28" x="14.605" y="0" drill="0.508"/>
-<pad name="P$29" x="15.875" y="0" drill="0.508" diameter="0.9906"/>
-<pad name="P$30" x="17.145" y="0" drill="0.508" diameter="0.9906"/>
+<pad name="P$3" x="-17.145" y="0" drill="0.44"/>
+<pad name="P$4" x="-15.875" y="0" drill="0.44"/>
+<pad name="P$5" x="-14.605" y="0" drill="0.44"/>
+<pad name="P$6" x="-13.335" y="0" drill="0.44"/>
+<pad name="P$7" x="-12.065" y="0" drill="0.44"/>
+<pad name="P$8" x="-10.795" y="0" drill="0.44"/>
+<pad name="P$9" x="-9.525" y="0" drill="0.44"/>
+<pad name="P$10" x="-8.255" y="0" drill="0.44"/>
+<pad name="P$11" x="-6.985" y="0" drill="0.44"/>
+<pad name="P$12" x="-5.715" y="0" drill="0.44"/>
+<pad name="P$13" x="-4.445" y="0" drill="0.44"/>
+<pad name="P$14" x="-3.175" y="0" drill="0.44"/>
+<pad name="P$15" x="-1.905" y="0" drill="0.44"/>
+<pad name="P$16" x="-0.635" y="0" drill="0.44"/>
+<pad name="P$17" x="0.635" y="0" drill="0.44"/>
+<pad name="P$18" x="1.905" y="0" drill="0.44"/>
+<pad name="P$19" x="3.175" y="0" drill="0.44"/>
+<pad name="P$20" x="4.445" y="0" drill="0.44"/>
+<pad name="P$21" x="5.715" y="0" drill="0.44"/>
+<pad name="P$22" x="6.985" y="0" drill="0.44"/>
+<pad name="P$23" x="8.255" y="0" drill="0.44"/>
+<pad name="P$24" x="9.525" y="0" drill="0.44"/>
+<pad name="P$25" x="10.795" y="0" drill="0.44"/>
+<pad name="P$26" x="12.065" y="0" drill="0.44"/>
+<pad name="P$27" x="13.335" y="0" drill="0.44"/>
+<pad name="P$28" x="14.605" y="0" drill="0.44"/>
+<pad name="P$29" x="15.875" y="0" drill="0.44"/>
+<pad name="P$30" x="17.145" y="0" drill="0.44"/>
 <pad name="P$1" x="30" y="1" drill="1.7"/>
 <pad name="P$2" x="-30" y="1" drill="1.7"/>
 <hole x="-36.25" y="0.5" drill="1.7"/>
 <hole x="36.25" y="0.5" drill="1.7"/>
-<wire x1="-38.1" y1="52.07" x2="38.1" y2="52.07" width="0.1524" layer="21"/>
-<wire x1="38.1" y1="52.07" x2="38.1" y2="-2.54" width="0.1524" layer="21"/>
-<wire x1="38.1" y1="-2.54" x2="-38.1" y2="-2.54" width="0.1524" layer="21"/>
-<wire x1="-38.1" y1="-2.54" x2="-38.1" y2="52.07" width="0.1524" layer="21"/>
+<rectangle x1="-38.7" y1="-4" x2="38.7" y2="52.4" layer="16" rot="R180"/>
 </package>
 </packages>
 <symbols>
@@ -9208,9 +9205,6 @@ Source: AVX .. aphvc.pdf</description>
 <part name="U$3" library="ELEC327" deviceset="MSP430G2XX3" device="TSSOP"/>
 <part name="U$5" library="TI_MSP430_v16" deviceset="USETHIS" device=""/>
 <part name="JP3" library="SparkFun" deviceset="M04" device="LOCK"/>
-<part name="CSUPPLY1" library="rcl" deviceset="C-US" device="C1206"/>
-<part name="P+1" library="supply1" deviceset="VCC" device=""/>
-<part name="GND11" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9335,16 +9329,6 @@ Source: AVX .. aphvc.pdf</description>
 <attribute name="VALUE" x="165.1" y="-1.27" size="1.778" layer="96"/>
 <attribute name="NAME" x="165.1" y="14.732" size="1.778" layer="95"/>
 </instance>
-<instance part="CSUPPLY1" gate="G$1" x="191.77" y="-20.32" smashed="yes">
-<attribute name="NAME" x="192.786" y="-19.685" size="1.778" layer="95"/>
-<attribute name="VALUE" x="192.786" y="-24.511" size="1.778" layer="96"/>
-</instance>
-<instance part="P+1" gate="VCC" x="196.85" y="-10.16" smashed="yes">
-<attribute name="VALUE" x="194.31" y="-12.7" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="GND11" gate="1" x="191.77" y="-30.48" smashed="yes">
-<attribute name="VALUE" x="189.23" y="-33.02" size="1.778" layer="96"/>
-</instance>
 </instances>
 <busses>
 </busses>
@@ -9458,11 +9442,6 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="88.9" y1="35.56" x2="91.44" y2="35.56" width="0.1524" layer="91"/>
 <label x="91.44" y="35.56" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="CSUPPLY1" gate="G$1" pin="2"/>
-<wire x1="191.77" y1="-25.4" x2="191.77" y2="-27.94" width="0.1524" layer="91"/>
-<pinref part="GND11" gate="1" pin="GND"/>
-</segment>
 </net>
 <net name="VCC" class="0">
 <segment>
@@ -9515,12 +9494,6 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="IC1" gate="G$1" pin="VCC"/>
 <wire x1="60.96" y1="38.1" x2="58.42" y2="38.1" width="0.1524" layer="91"/>
 <label x="48.26" y="38.1" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="CSUPPLY1" gate="G$1" pin="1"/>
-<wire x1="191.77" y1="-17.78" x2="191.77" y2="-12.7" width="0.1524" layer="91"/>
-<pinref part="P+1" gate="VCC" pin="VCC"/>
-<wire x1="191.77" y1="-12.7" x2="196.85" y2="-12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="BAT_VCC" class="0">

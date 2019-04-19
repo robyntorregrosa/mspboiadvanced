@@ -914,34 +914,34 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <library name="gameconsole">
 <packages>
 <package name="DISPLAY_128_64">
-<pad name="P$3" x="-17.145" y="0" drill="0.508"/>
-<pad name="P$4" x="-15.875" y="0" drill="0.508"/>
-<pad name="P$5" x="-14.605" y="0" drill="0.508"/>
-<pad name="P$6" x="-13.335" y="0" drill="0.508"/>
-<pad name="P$7" x="-12.065" y="0" drill="0.508"/>
-<pad name="P$8" x="-10.795" y="0" drill="0.508"/>
-<pad name="P$9" x="-9.525" y="0" drill="0.508"/>
-<pad name="P$10" x="-8.255" y="0" drill="0.508"/>
-<pad name="P$11" x="-6.985" y="0" drill="0.508"/>
-<pad name="P$12" x="-5.715" y="0" drill="0.508"/>
-<pad name="P$13" x="-4.445" y="0" drill="0.508"/>
-<pad name="P$14" x="-3.175" y="0" drill="0.508"/>
-<pad name="P$15" x="-1.905" y="0" drill="0.508"/>
-<pad name="P$16" x="-0.635" y="0" drill="0.508"/>
-<pad name="P$17" x="0.635" y="0" drill="0.508"/>
-<pad name="P$18" x="1.905" y="0" drill="0.508"/>
-<pad name="P$19" x="3.175" y="0" drill="0.508"/>
-<pad name="P$20" x="4.445" y="0" drill="0.508"/>
-<pad name="P$21" x="5.715" y="0" drill="0.508"/>
-<pad name="P$22" x="6.985" y="0" drill="0.508"/>
-<pad name="P$23" x="8.255" y="0" drill="0.508"/>
-<pad name="P$24" x="9.525" y="0" drill="0.508"/>
-<pad name="P$25" x="10.795" y="0" drill="0.508"/>
-<pad name="P$26" x="12.065" y="0" drill="0.508"/>
-<pad name="P$27" x="13.335" y="0" drill="0.508"/>
-<pad name="P$28" x="14.605" y="0" drill="0.508"/>
-<pad name="P$29" x="15.875" y="0" drill="0.508" diameter="0.9906"/>
-<pad name="P$30" x="17.145" y="0" drill="0.508" diameter="0.9906"/>
+<pad name="P$3" x="-17.145" y="0" drill="0.55" diameter="1.27"/>
+<pad name="P$4" x="-15.875" y="0" drill="0.44"/>
+<pad name="P$5" x="-14.605" y="0" drill="0.44"/>
+<pad name="P$6" x="-13.335" y="0" drill="0.44"/>
+<pad name="P$7" x="-12.065" y="0" drill="0.44"/>
+<pad name="P$8" x="-10.795" y="0" drill="0.44"/>
+<pad name="P$9" x="-9.525" y="0" drill="0.44"/>
+<pad name="P$10" x="-8.255" y="0" drill="0.44"/>
+<pad name="P$11" x="-6.985" y="0" drill="0.44"/>
+<pad name="P$12" x="-5.715" y="0" drill="0.44"/>
+<pad name="P$13" x="-4.445" y="0" drill="0.44"/>
+<pad name="P$14" x="-3.175" y="0" drill="0.44"/>
+<pad name="P$15" x="-1.905" y="0" drill="0.44"/>
+<pad name="P$16" x="-0.635" y="0" drill="0.44"/>
+<pad name="P$17" x="0.635" y="0" drill="0.44"/>
+<pad name="P$18" x="1.905" y="0" drill="0.44"/>
+<pad name="P$19" x="3.175" y="0" drill="0.44"/>
+<pad name="P$20" x="4.445" y="0" drill="0.44"/>
+<pad name="P$21" x="5.715" y="0" drill="0.44"/>
+<pad name="P$22" x="6.985" y="0" drill="0.44"/>
+<pad name="P$23" x="8.255" y="0" drill="0.55"/>
+<pad name="P$24" x="9.525" y="0" drill="0.55"/>
+<pad name="P$25" x="10.795" y="0" drill="0.55"/>
+<pad name="P$26" x="12.065" y="0" drill="0.55"/>
+<pad name="P$27" x="13.335" y="0" drill="0.55"/>
+<pad name="P$28" x="14.605" y="0" drill="0.55"/>
+<pad name="P$29" x="15.875" y="0" drill="0.55" diameter="0.9906"/>
+<pad name="P$30" x="17.145" y="0" drill="0.55" diameter="0.9906"/>
 <pad name="P$1" x="30" y="1" drill="1.7"/>
 <pad name="P$2" x="-30" y="1" drill="1.7"/>
 <hole x="-36.25" y="0.5" drill="1.7"/>
