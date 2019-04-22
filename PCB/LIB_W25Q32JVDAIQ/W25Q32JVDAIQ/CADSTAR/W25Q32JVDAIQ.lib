@@ -1,0 +1,16 @@
+.W25Q32JVDAIQ :1 ;NOR Flash spiFlash, 32M-bit, DTR, 4Kb Uniform Sector
+DIP902W46P254L959H533Q8N
+*STM IC
+*NGS
+*PLB 1="/CS" 2="DO" 3="/WP" 4="GND" 5="VCC" 6="/HOLD" 7="CLK" 8="DI"
+*MXP 8
+*DFN W25Q32JVDAIQ
+~!Mouser Part Number (-)
+~!Mouser Price/Stock (-)
+~!Manufacturer_Name (Winbond)
+~!Manufacturer_Part_Number (W25Q32JVDAIQ)
+~!Link Datasheet (https://mouser.componentsearchengine.com/Datasheets/1/W25Q32JVDAIQ.pdf)
+~!Height (5.33mm)
+~!3D_Model (W25Q32JVDAIQ)
+W25Q32JVDAIQ
+1.1!I 2.1!U 3.1!U 4.1!G 8.1!P 7.1!U 6.1!I 5.1!U 
