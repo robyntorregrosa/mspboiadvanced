@@ -5,7 +5,13 @@
  * blink.c
  */
 
-int readX(){
+int readX(void);
+int readY(void);
+void setupBTNs(void);
+void setupSPIPins(void);
+void setupDisplayPins(void);
+
+int readX(void){
     ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10, start conversion
@@ -13,7 +19,7 @@ int readX(){
     return ADC10MEM;
 }
 
-int readY(){
+int readY(void){
     ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10 A3, start conversion
@@ -21,7 +27,7 @@ int readY(){
     return ADC10MEM;
 }
 
-void setupBTNs(){
+void setupBTNs(void){
     // setup switch
     // BTN2  P2.2
     P2SEL &= ~(BIT2);        // I/O
@@ -42,7 +48,7 @@ void setupBTNs(){
     P2IFG &= ~BIT2;     // initialize pin 2.0 interrupt flag to none pending
 }
 
-void setupSPIpins() {
+void setupSPIPins(void){
     //  SPI - O (out to flash)
     //  Pin 3, P1.1/UCA0SOMI
     //  PIN 4, P1.2/UCA0SIMO
@@ -51,11 +57,10 @@ void setupSPIpins() {
     P1SEL |=  BIT2 | BIT3 | BIT4;                     // select UCA0SOMI and UCA0SIMO
     P1SEL2 |=  BIT2 | BIT3 | BIT4;
 
-    UCA0CTL1 |= UCSWRST;                     // **Initialize USCI state machine**
+    UCA0CTL1 |= UCSWRST + UCSSEL_2;                     // **Initialize USCI state machine**
     UCA0CTL0 |= UCMST+UCSYNC+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
-    UCA0CTL1 |= UCSSEL_2;                     // ACLK
-    UCA0BR0 = 0;                           // Set Frequency
-    UCA0BR1 = 0;
+    //UCA0BR0 = 0;                              // Set Frequency
+    //UCA0BR1 = 0;
     UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
 
     // SPI - S (into slave)
@@ -74,10 +79,33 @@ void setupSPIpins() {
     UCB0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
 }
 
+void setupDisplayPins(void){
+    /*
+     * CS1 -> 3.0  Active LOW
+     * RES -> 3.4  Active LOW
+     * A0  -> 2.5  Register Select
+     * WR  -> 2.4  Active LOW
+     * RD  -> 2.3  Active LOW
+     * C86 -> 3.7  Always LOW
+     * PS  -> 2.7  Always LOW
+     */
+    P2DIR |= BIT7 + BIT5 + BIT4 + BIT3;
+    P3DIR |= BIT0 + BIT4 + BIT7;
+
+    //Initially LOW pins
+    P2OUT &= ~(BIT7 + BIT5);
+    P3OUT &= ~(BIT7);
+
+    //Initially HIGH pins
+    P2OUT |= BIT3 + BIT4;
+    P3OUT |= BIT0 + BIT4;
+}
+
+
+
 void main(void)
 {
 	WDTCTL = WDTPW | WDTHOLD;		// stop watchdog timer
-	P1DIR |= 0x01;					// configure P1.0 as output
 
 	// Setup Pins
 	// P2.1/TA1.1 PWM
@@ -85,14 +113,42 @@ void main(void)
     P2SEL2 &= ~BIT1;
     P2DIR |= BIT1;                  // Timer1_A3.TA1
 
-
-
-    setupSPIpins();
+    setupSPIPins();
+    setupDisplayPins();
 
     // joystick adc input X (Pin 2, A0), Y (pin 5, A3)
     ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
 
 	volatile unsigned int i;		// volatile to prevent optimization
+
+    P3OUT &= ~BIT0;                 //Enable Chip Select
+    __delay_cycles(10);
+    P2OUT &= ~BIT4;                 //Enable Write
+
+	UCA0TXBUF = 0b10101111;              //Send turn on display
+	//__delay_cycles(10);
+	//UCA0TXBUF = 0b10100101;              //Send all points on
+	//__delay_cycles(10);
+
+    P2OUT |= BIT4;                 //Disable Write
+    __delay_cycles(10);
+    P3OUT |= BIT0;                 //Disable Chip Select
+    __delay_cycles(10);
+
+
+    P3OUT &= ~BIT0;                 //Enable Chip Select
+    __delay_cycles(10);
+    P2OUT &= ~BIT4;                 //Enable Write
+
+    UCA0TXBUF = 0b10100101;              //Send all points on
+    //__delay_cycles(10);
+    //UCA0TXBUF = 0b10100101;              //Send all points on
+    //__delay_cycles(10);
+
+    P2OUT |= BIT4;                 //Disable Write
+    __delay_cycles(10);
+    P3OUT |= BIT0;                 //Disable Chip Select
+    __delay_cycles(10);
 
 	int Xdir;
 	int Ydir;
