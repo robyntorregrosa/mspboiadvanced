@@ -15,18 +15,19 @@ void sendData(unsigned int);
 
 void sendCommand(unsigned int c){
     P3OUT &= ~BIT0;
+    __delay_cycles(10);
     P2OUT &= ~BIT5;
-    __delay_cycles(1);
+    __delay_cycles(10);
     P2OUT &= ~BIT4;
     UCA0TXBUF = c;
-    __delay_cycles(1);
     P2OUT |= BIT4;
+    __delay_cycles(10);
     P3OUT |= BIT0;
-    __delay_cycles(1);
+    __delay_cycles(10);
 }
 
 
-int readX(void){
+int readY(void){
     ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10, start conversion
@@ -34,7 +35,7 @@ int readX(void){
     return ADC10MEM;
 }
 
-int readY(void){
+int readX(void){
     ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10 A3, start conversion
@@ -87,7 +88,7 @@ void setupSPIPins(void){
     P1SEL2 |=  BIT5 | BIT6 | BIT7;
 
     UCB0CTL1 |= UCSWRST;                     // **Initialize USCI state machine**
-    UCB0CTL0 |= UCMST+UCSYNC;//+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
+    UCB0CTL0 |= UCMST+UCSYNC+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
     UCB0CTL1 |= UCSSEL_2;                     // ACLK
     UCB0BR0 = 0;                           // Set Frequency
     UCB0BR1 = 0;
@@ -136,32 +137,35 @@ void main(void)
     //P2SEL2 &= ~BIT1;
     P2DIR |= BIT1;                  // Timer1_A3.TA1
     P2OUT |= BIT1;
-    setupSPIPins();
-    setupDisplayPins();
+    //setupSPIPins();
+    //setupDisplayPins();
 
     // joystick adc input X (Pin 2, A0), Y (pin 5, A3)
     ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
 
     volatile unsigned int i;        // volatile to prevent optimization
 
-/*
+
     sendCommand(0xA2); //added 1/9 bias
     sendCommand(0xA0); //ADC segment driver direction (A0=Normal)
     sendCommand(0xC8); //added
     sendCommand(0xC0); //COM output scan direction (C0= Normal)
     sendCommand(0x40); //Operating Mode
-    __delay_cycles(1);
+    __delay_cycles(100);
     sendCommand(0x25); //resistor ratio
-    __delay_cycles(1);
+    __delay_cycles(100);
     sendCommand(0x81); //electronic volume mode set
-    __delay_cycles(1);
+    __delay_cycles(100);
     sendCommand(0x19); //electronic volume register set
-    __delay_cycles(1);
+    __delay_cycles(100);
     sendCommand(0x2F); //power control set
-    __delay_cycles(1);
+    __delay_cycles(100);
     sendCommand(0xAF); //display ON/OFF - set to ON
-*/
+    __delay_cycles(100);
+    sendCommand(0xA5);  //Display points on
+    __delay_cycles(100);
 
+/*
     P3OUT &= ~BIT0;                 //Enable Chip Select
     __delay_cycles(10);
     P2OUT &= ~BIT4;                 //Enable Write
@@ -174,7 +178,7 @@ void main(void)
     P2OUT |= BIT4;                 //Disable Write
     __delay_cycles(10);
     P3OUT |= BIT0;                 //Disable Chip Select
-    __delay_cycles(10);
+    __delay_cycles(1000);
 
 
     P3OUT &= ~BIT0;                 //Enable Chip Select
@@ -190,13 +194,13 @@ void main(void)
     __delay_cycles(10);
     P3OUT |= BIT0;                 //Disable Chip Select
     __delay_cycles(10);
-
+*/
 
 
 
     //TIMER A_1
     TA1CCR0  |= 12000;                         // Setting PWM Freq
-    TA1CCR1  |= 6000;                           // Duty Cycle (G)
+    TA1CCR1  |= 1;                           // Duty Cycle (G)
     TA1CCTL1 |= OUTMOD_7;                      // Reset/Set Mode
     TA1CTL   |= TASSEL_1 + MC_1;               // ACLK and UP TO CCR0
 
@@ -210,7 +214,7 @@ void main(void)
     while(1)
     {
         Xdir= readX();
-        Ydir= readY();
+        //Ydir= readY();
 
 //      P1OUT ^= 0x01;              // toggle P1.0
 //      for(i=10000; i>0; i--);     // delay
