@@ -10,10 +10,10 @@ int readY(void);
 void setupBTNs(void);
 void setupSPIPins(void);
 void setupDisplayPins(void);
-void comm_out(unsigned int);
-void data_out(unsigned int);
+void sendCommand(unsigned int);
+void sendData(unsigned int);
 
-void comm_out(unsigned int c){
+void sendCommand(unsigned int c){
     P3OUT &= ~BIT0;
     P2OUT &= ~BIT5;
     __delay_cycles(1);
@@ -69,11 +69,11 @@ void setupSPIPins(void){
     //  PIN 4, P1.2/UCA0SIMO
     //  PIN 6, P1.4/UCA0CLK
 
-    P1SEL |=  BIT2 | BIT3 | BIT4;                     // select UCA0SOMI and UCA0SIMO
-    P1SEL2 |=  BIT2 | BIT3 | BIT4;
+    P1SEL |=  BIT1 | BIT2 | BIT4;                     // select UCA0SOMI and UCA0SIMO
+    P1SEL2 |=  BIT1 | BIT2 | BIT4;
 
     UCA0CTL1 |= UCSWRST + UCSSEL_2;                     // **Initialize USCI state machine**
-    UCA0CTL0 |= UCMST+UCSYNC+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
+    UCA0CTL0 |= UCMST+UCSYNC + UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
     //UCA0BR0 = 0;                              // Set Frequency
     //UCA0BR1 = 0;
     UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
@@ -87,7 +87,7 @@ void setupSPIPins(void){
     P1SEL2 |=  BIT5 | BIT6 | BIT7;
 
     UCB0CTL1 |= UCSWRST;                     // **Initialize USCI state machine**
-    UCB0CTL0 |= UCMST+UCSYNC+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
+    UCB0CTL0 |= UCMST+UCSYNC;//+UCMSB;           // 8-bit SPI mstr, MSb 1st, CPOL=0, CPHS=0, 3 pin SPI
     UCB0CTL1 |= UCSSEL_2;                     // ACLK
     UCB0BR0 = 0;                           // Set Frequency
     UCB0BR1 = 0;
@@ -145,23 +145,23 @@ void main(void)
     volatile unsigned int i;        // volatile to prevent optimization
 
 /*
-    comm_out(0xA2); //added 1/9 bias
-    comm_out(0xA0); //ADC segment driver direction (A0=Normal)
-    comm_out(0xC8); //added
-    comm_out(0xC0); //COM output scan direction (C0= Normal)
-    comm_out(0x40); //Operating Mode
+    sendCommand(0xA2); //added 1/9 bias
+    sendCommand(0xA0); //ADC segment driver direction (A0=Normal)
+    sendCommand(0xC8); //added
+    sendCommand(0xC0); //COM output scan direction (C0= Normal)
+    sendCommand(0x40); //Operating Mode
     __delay_cycles(1);
-    comm_out(0x25); //resistor ratio
+    sendCommand(0x25); //resistor ratio
     __delay_cycles(1);
-    comm_out(0x81); //electronic volume mode set
+    sendCommand(0x81); //electronic volume mode set
     __delay_cycles(1);
-    comm_out(0x19); //electronic volume register set
+    sendCommand(0x19); //electronic volume register set
     __delay_cycles(1);
-    comm_out(0x2F); //power control set
+    sendCommand(0x2F); //power control set
     __delay_cycles(1);
-    comm_out(0xAF); //display ON/OFF - set to ON
+    sendCommand(0xAF); //display ON/OFF - set to ON
 */
-/*
+
     P3OUT &= ~BIT0;                 //Enable Chip Select
     __delay_cycles(10);
     P2OUT &= ~BIT4;                 //Enable Write
@@ -190,16 +190,16 @@ void main(void)
     __delay_cycles(10);
     P3OUT |= BIT0;                 //Disable Chip Select
     __delay_cycles(10);
-*/
 
 
-/*
-        //TIMER A_1
-        TA1CCR0  |= 12000;                         // Setting PWM Freq
-        TA1CCR1  |= 6000;                           // Duty Cycle (G)
-        TA1CCTL1 |= OUTMOD_7;                      // Reset/Set Mode
-        TA1CTL   |= TASSEL_1 + MC_1;               // ACLK and UP TO CCR0
-*/
+
+
+    //TIMER A_1
+    TA1CCR0  |= 12000;                         // Setting PWM Freq
+    TA1CCR1  |= 6000;                           // Duty Cycle (G)
+    TA1CCTL1 |= OUTMOD_7;                      // Reset/Set Mode
+    TA1CTL   |= TASSEL_1 + MC_1;               // ACLK and UP TO CCR0
+
 
 
 
