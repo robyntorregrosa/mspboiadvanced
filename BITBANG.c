@@ -173,7 +173,6 @@ void write_buffer(unsigned char* buffer);
 void sendData(unsigned char data);
 void sendCmd(unsigned char cmd);
 
-#define LCDPORT P1OUT
 
 #define A0  BIT5 //P2
 #define CS  BIT0 //P3
@@ -306,16 +305,16 @@ void doSPI(unsigned char d)
     unsigned char i;
     for (i = 0; i < 8; i++)
     {
-        LCDPORT &= ~ SDA;
+        P1OUT &= ~ SDA;
 
         if (d & 0x80)
         {
-            LCDPORT |= SDA;
+            P1OUT |= SDA;
 
         }
 
-        LCDPORT &= ~SCK;
-        LCDPORT |= SCK;
+        P1OUT &= ~SCK;
+        P1OUT |= SCK;
 
         d <<= 1;
 
