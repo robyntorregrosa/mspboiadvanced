@@ -1,4 +1,4 @@
-#include <msp430.h>				
+#include <msp430.h>
 
 
 /**
@@ -10,6 +10,21 @@ int readY(void);
 void setupBTNs(void);
 void setupSPIPins(void);
 void setupDisplayPins(void);
+void comm_out(unsigned int);
+void data_out(unsigned int);
+
+void comm_out(unsigned int c){
+    P3OUT &= ~BIT0;
+    P2OUT &= ~BIT5;
+    __delay_cycles(1);
+    P2OUT &= ~BIT4;
+    UCA0TXBUF = c;
+    __delay_cycles(1);
+    P2OUT |= BIT4;
+    P3OUT |= BIT0;
+    __delay_cycles(1);
+}
+
 
 int readX(void){
     ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
@@ -68,7 +83,7 @@ void setupSPIPins(void){
     // Pin 23, P1.7/UCB0SIMO
     // S CLK Pin 7, P1.5/ UCB0CLK
 
-    P1SEL |= BIT5 | BIT6 | BIT7;                     // select UCB0SOMI and UCB0SIMO
+    P1SEL |= BIT5 | BIT6 | BIT7;                     // selectde UCB0SOMI and UCB0SIMO
     P1SEL2 |=  BIT5 | BIT6 | BIT7;
 
     UCB0CTL1 |= UCSWRST;                     // **Initialize USCI state machine**
@@ -83,18 +98,26 @@ void setupDisplayPins(void){
     /*
      * CS1 -> 3.0  Active LOW
      * RES -> 3.4  Active LOW
-     * A0  -> 2.5  Register Select, 0: instruction; 1: data register
+     * A0  -> 2.5  Register Select
      * WR  -> 2.4  Active LOW
      * RD  -> 2.3  Active LOW
-     * C86 -> 3.7  Always LOW for 8080 mode
-     * PS  -> 2.7  Always LOW for Serial
+     * C86 -> 3.7  Always LOW
+     * PS  -> 2.7  Always LOW
      */
     P2DIR |= BIT7 + BIT5 + BIT4 + BIT3;
     P3DIR |= BIT0 + BIT4 + BIT7;
 
     //Initially LOW pins
+    //P2OUT &= ~(BIT7 + BIT5);
+    //P3OUT &= ~(BIT7);
+
     P2OUT &= ~(BIT7 + BIT5);
-    P3OUT &= ~(BIT7);
+    P2REN |= BIT7;              // PULL DOWN RESISTOR
+
+    P3REN |= BIT7;              // PULL DOWN RESISTOR
+    P3OUT &= ~BIT7;
+
+
 
     //Initially HIGH pins
     P2OUT |= BIT3 + BIT4;
@@ -105,30 +128,48 @@ void setupDisplayPins(void){
 
 void main(void)
 {
-	WDTCTL = WDTPW | WDTHOLD;		// stop watchdog timer
+    WDTCTL = WDTPW | WDTHOLD;       // stop watchdog timer
 
-	// Setup Pins
-	// P2.1/TA1.1 PWM
-    P2SEL |= BIT1;
-    P2SEL2 &= ~BIT1;
+    // Setup Pins
+    // P2.1/TA1.1 PWM
+    //P2SEL |= BIT1;
+    //P2SEL2 &= ~BIT1;
     P2DIR |= BIT1;                  // Timer1_A3.TA1
-
+    P2OUT |= BIT1;
     setupSPIPins();
     setupDisplayPins();
 
     // joystick adc input X (Pin 2, A0), Y (pin 5, A3)
     ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
 
-	volatile unsigned int i;		// volatile to prevent optimization
+    volatile unsigned int i;        // volatile to prevent optimization
 
+/*
+    comm_out(0xA2); //added 1/9 bias
+    comm_out(0xA0); //ADC segment driver direction (A0=Normal)
+    comm_out(0xC8); //added
+    comm_out(0xC0); //COM output scan direction (C0= Normal)
+    comm_out(0x40); //Operating Mode
+    __delay_cycles(1);
+    comm_out(0x25); //resistor ratio
+    __delay_cycles(1);
+    comm_out(0x81); //electronic volume mode set
+    __delay_cycles(1);
+    comm_out(0x19); //electronic volume register set
+    __delay_cycles(1);
+    comm_out(0x2F); //power control set
+    __delay_cycles(1);
+    comm_out(0xAF); //display ON/OFF - set to ON
+*/
+/*
     P3OUT &= ~BIT0;                 //Enable Chip Select
     __delay_cycles(10);
     P2OUT &= ~BIT4;                 //Enable Write
 
-	UCA0TXBUF = 0b10101111;              //Send turn on display
-	//__delay_cycles(10);
-	//UCA0TXBUF = 0b10100101;              //Send all points on
-	//__delay_cycles(10);
+    UCA0TXBUF = 0b10101111;              //Send turn on display
+    //__delay_cycles(10);
+    //UCA0TXBUF = 0b10100101;              //Send all points on
+    //__delay_cycles(10);
 
     P2OUT |= BIT4;                 //Disable Write
     __delay_cycles(10);
@@ -149,19 +190,31 @@ void main(void)
     __delay_cycles(10);
     P3OUT |= BIT0;                 //Disable Chip Select
     __delay_cycles(10);
+*/
 
-	int Xdir;
-	int Ydir;
-	Xdir = 0;
-	Ydir = 0;
-	while(1)
-	{
-	    Xdir= readX();
+
+/*
+        //TIMER A_1
+        TA1CCR0  |= 12000;                         // Setting PWM Freq
+        TA1CCR1  |= 6000;                           // Duty Cycle (G)
+        TA1CCTL1 |= OUTMOD_7;                      // Reset/Set Mode
+        TA1CTL   |= TASSEL_1 + MC_1;               // ACLK and UP TO CCR0
+*/
+
+
+
+    int Xdir;
+    int Ydir;
+    Xdir = 0;
+    Ydir = 0;
+    while(1)
+    {
+        Xdir= readX();
         Ydir= readY();
 
-//		P1OUT ^= 0x01;				// toggle P1.0
-//		for(i=10000; i>0; i--);     // delay
-	}
+//      P1OUT ^= 0x01;              // toggle P1.0
+//      for(i=10000; i>0; i--);     // delay
+    }
 }
 
 // ADC10 interrupt service routine
