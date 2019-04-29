@@ -83,11 +83,11 @@ void setupDisplayPins(void){
     /*
      * CS1 -> 3.0  Active LOW
      * RES -> 3.4  Active LOW
-     * A0  -> 2.5  Register Select
+     * A0  -> 2.5  Register Select, 0: instruction; 1: data register
      * WR  -> 2.4  Active LOW
      * RD  -> 2.3  Active LOW
-     * C86 -> 3.7  Always LOW
-     * PS  -> 2.7  Always LOW
+     * C86 -> 3.7  Always LOW for 8080 mode
+     * PS  -> 2.7  Always LOW for Serial
      */
     P2DIR |= BIT7 + BIT5 + BIT4 + BIT3;
     P3DIR |= BIT0 + BIT4 + BIT7;
