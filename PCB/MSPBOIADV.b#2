@@ -163,17 +163,15 @@ ADVANCE</text>
 <text x="23.876" y="14.859" size="3.81" layer="1" font="vector">Rene Robyn Fredy</text>
 <text x="35.052" y="7.366" size="3.81" layer="1" font="vector">Ver 1</text>
 <polygon width="0.1524" layer="41">
-<vertex x="56.007" y="56.261"/>
-<vertex x="64.77" y="56.261"/>
-<vertex x="64.77" y="55.499"/>
-<vertex x="64.77" y="53.467"/>
-<vertex x="56.007" y="53.467"/>
+<vertex x="56.007" y="56.134"/>
+<vertex x="64.77" y="56.134"/>
+<vertex x="64.77" y="53.594"/>
+<vertex x="56.007" y="53.594"/>
 </polygon>
 <polygon width="0.1524" layer="41">
-<vertex x="68.834" y="46.101"/>
-<vertex x="77.216" y="46.101"/>
-<vertex x="77.216" y="43.307"/>
-<vertex x="68.834" y="43.307"/>
+<vertex x="68.834" y="45.974"/>
+<vertex x="77.216" y="45.974"/>
+<vertex x="77.216" y="43.434"/>
 <vertex x="68.834" y="43.434"/>
 </polygon>
 <polygon width="0.1524" layer="41">
