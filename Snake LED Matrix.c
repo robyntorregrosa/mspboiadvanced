@@ -4,12 +4,13 @@
 
 int c = 0;                                  //Char index
 int i = 0;                                  //Led index
+static int DISPLAY_SIZE = 340;               //number of pixels in display
 
-void sendBitmap(char* bitmapping);
+void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
 void clearPixel(int row, int col);
 void movePixel(int row, int col, int dest_row, int dest_col);
-//void shiftPixel(int row, int col, int dir, int num_times);    UNCOMMMENT WHEN shiftPixel() is complete
+void shiftPixel(int row, int col, int x_shift, int y_shift);
 
 
 static char BRIGHTNESS = 0xE1;                 //Set LED brightness for whole bitmap
@@ -60,11 +61,17 @@ int main(void)
 
 
     setPixel(4,10,'g');
-    movePixel(8,9,9,10);
+    sendBitmap(bitmap);
+    __delay_cycles(1000000);
+    movePixel(4,10,5,11);
+    sendBitmap(bitmap);
+    __delay_cycles(1000000);
+    shiftPixel(5,11,1,0);
+    sendBitmap(bitmap);
+    //shiftPixel(9,10,1,1);
 
     while(1) {
         sendBitmap(bitmap);
-
         __bis_SR_register(LPM1_bits);         //Enter LPM1
     }
 
@@ -74,12 +81,12 @@ int main(void)
 /*
  * sends a specified bitmap to the display
  */
-void sendBitmap(char* bitmapping){
+void sendBitmap(unsigned char* bitmapping){
     for(i = 3; i >= 0; i--){
         UCA0TXBUF = 0x00;              //Send start frame
         __delay_cycles(10);
     }
-    for(c = 0; c < sizeof(bitmapping); c++){        //Sends colors for each pixel in bitmap
+    for(c = 0; c < DISPLAY_SIZE; c++){        //Sends colors for each pixel in bitmap
         UCA0TXBUF = BRIGHTNESS;              //Send brightness byte on transmit buffer
         __delay_cycles(10);
         switch(bitmapping[c]){
@@ -183,50 +190,50 @@ void movePixel(int row, int col, int dest_row, int dest_col){
 
 /*
  * TODO: FINISH function and add wraparound cases (if too much shift one way, comes back around the other way)
- * shifts a pixel in a specified row and col in a certain direction and a certain num of times
- * dir:
- * 0 = up
- * 1 = up-right
- * 2 = right
- * 3 = down-right
- * 4 = down
- * 5 = down-left
- * 6 = left
- * 7 = up-left
- *
-void shiftPixel(int row, int col, int dir, int num_times){
-    if(dir == 0 || dir == 1){
+ * shifts a pixel in a specified row and col in a certain x and y direction.
+ * x_shift and y_shift can be negative
+ */
+void shiftPixel(int row, int col, int x_shift, int y_shift){
+    int final_shift_x;
+    int final_shift_y;
+    final_shift_x = 0;
+    final_shift_y = 0;
+    int temp;
+    temp = 0;
 
+    //x-direction
+    while(x_shift > 20){
+        x_shift -= 20;
+    }
+    while(x_shift < -20){
+        x_shift += 20;
+    }
+    temp = x_shift + col;
+    if((x_shift + col) > 20){
+        final_shift_x = x_shift - (20-col);
+    }else if((x_shift + col) < 20){
+        final_shift_x = x_shift + (20-col);
+    }else{
+        final_shift_x = x_shift;
     }
 
-    switch(dir){
-    case 0:             //up
-        movePixel(row,col,row + num_times,col);
-        break;
-    case 1:             //up-right
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 2:             //right
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 3:             //down-right
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 4:             //down
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 5:             //down-left
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 6:             //left
-        movePixel(row,col,row,col+num_times);
-        break;
-    case 7:             //up-left
-        movePixel(row,col,row,col+num_times);
-        break;
+    //y-direction
+    while(y_shift > 17){
+        y_shift -= 17;
     }
+    while(y_shift < -17){
+        y_shift += 17;
+    }
+    if((y_shift + row) > 17){
+        final_shift_y = y_shift - (17-row);
+    }else if((y_shift + row) < 17){
+        final_shift_y = y_shift + (17-row);
+    }else{
+        final_shift_y = y_shift;
+    }
+    movePixel(row,col,row + final_shift_y, col + final_shift_x);
 }
-*/
+
 
 // Watchdog Timer interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
