@@ -8,17 +8,20 @@
 #define BIT5 0x20;
 #define BIT3 0x8;
 
-unsigned char lfsr;
-unsigned char *lfsrPtr = &lfsr;
+int lfsr;
+int *lfsrPtr = &lfsr;
 
  void srand(char seed) {
-     *lfsrPtr = seed;
+     if (seed == 0) {
+         seed = 1;
+     }
+     lfsr = seed;   // seed with nonzero value
  }
 
-int rand(void) {
-     int newbit;
-     // taps 3, 5
-     newbit = ((*lfsrPtr >> 0) ^ (*lfsrPtr >> 2)) & 1;
-     *lfsrPtr = (*lfsrPtr >> 1) | (newbit << 4);    // shift buffer values, mod by maximum
-     return (*lfsrPtr & 0x3) + 1;         // return value 1-4
+ int rand()
+ {      // thanks wikipedia: https://en.wikipedia.org/wiki/Linear-feedback_shift_register
+     lfsr ^= lfsr >> 7;
+     lfsr ^= lfsr << 9;
+     lfsr ^= lfsr >> 13;
+     return lfsr;
  }
