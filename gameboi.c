@@ -61,10 +61,10 @@ int main(void)
     shiftX = 0;
     shiftY = 0;
 
-    static const int LEFTBOUND = 600;
-    static const int RIGHTBOUND = 520;
-    static const int UPBOUND = 590;
-    static const int DOWNBOUND = 578;
+    static const int LEFTBOUND = 610;
+    static const int RIGHTBOUND = 420;
+    static const int UPBOUND = 215;
+    static const int DOWNBOUND = 815;
     /*------------- Setup -------------*/
     BCSCTL3 |= LFXT1S_2;                                        // ACLK = VLO
     WDTCTL = WDT_ADLY_16;                                       // WDT 16ms, ACLK, interval timer
@@ -108,6 +108,7 @@ int main(void)
         shiftX=0;
         readXY();
         Xread = adc[0];
+        Yread = adc[2];
         if (myPlace[0] == coinrow && myPlace[1] == coincol)
         {
             setPixel(coinrow, coincol, 'g');                        // yum!
@@ -128,8 +129,6 @@ int main(void)
             sendBitmap(bitmap);
         }
 
-        readXY();
-        Yread = adc[3];
 
         if (shiftX == 0)
         {
@@ -159,7 +158,7 @@ void readXY(void)
     ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
 
     X_Axis = adc[0];                        // adc array 0 copied to the variable X_Axis
-    Y_Axis = adc[3];                        // adc array 1 copied to the variable Y_Axis
+    Y_Axis = adc[2];                        // adc array 1 copied to the variable Y_Axis
     seed = adc[5];                           // adc array 2 copied to the variable Z_Axis
     __bis_SR_register(LPM3_bits + GIE);        // LPM0, ADC10_ISR will force exit
 }
