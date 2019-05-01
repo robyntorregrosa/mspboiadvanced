@@ -41,10 +41,10 @@ unsigned char bitmap[] =
 int main(void)
 {
 
-    static const int LEFTBOUND = 589;
-    static const int RIGHTBOUND = 927;
-    static const int UPBOUND = 650;
-    static const int DOWNBOUND = 800;
+    static const int LEFTBOUND = 830;
+    static const int RIGHTBOUND = 230;
+    static const int UPBOUND = 550;
+    static const int DOWNBOUND = 580;
 //    int j = 0;
 //    int k = 0;
     /*------------- Setup -------------*/
@@ -65,11 +65,14 @@ int main(void)
     UCA0CTL1 &= ~UCSWRST;                                      //Disable reset
 
     /* --------- Setup ADC for XY ------ */
-    // joystick input X (Pin 2, A0), Y (pin 5, A5)
-    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
+    // joystick input X (Pin 2, A0), Y (pin 5, A3)
+    P1SEL |= BIT0 + BIT3;
+    ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
+    ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE; // Set up ADC
+    shiftX = 0;
+    shiftY = 0;
 
-    __bis_SR_register(GIE);                   // Enable interrupts
-
+    __bis_SR_register(GIE);               // Enable interrupts
 
     setPixel(myPlace[0], myPlace[1], 'g');
     __delay_cycles(1000000);
@@ -78,70 +81,67 @@ int main(void)
     int Xread;
     int Yread;
     Xread = 0;
+    ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
     Yread = 0;
     int shiftX;
     int shiftY;
 
     while (1)
-   {
-        shiftX = 0;
-        shiftY = 0;
+    {
+
         Xread = readX();
 
-
-        if (Xread < LEFTBOUND)
-        {
-            shiftX = -1;
-            shiftPixel(myPlace[0], myPlace[1], shiftX , 0);
-            sendBitmap(bitmap);
-
-
-        }
-        else if (Xread > RIGHTBOUND)
+        if (Xread > LEFTBOUND)
         {
             shiftX = 1;
-            shiftPixel(myPlace[0], myPlace[1], shiftX , 0);
+            shiftPixel(myPlace[0], myPlace[1], shiftX, 0);
             sendBitmap(bitmap);
-
+        }
+        else if (Xread < RIGHTBOUND)
+        {
+            shiftX = -1;
+            shiftPixel(myPlace[0], myPlace[1], shiftX, 0);
+            sendBitmap(bitmap);
         }
 
         Yread = readY();
 
-        if(shiftX == 0 ){
-        if (Yread < UPBOUND)
+        if (shiftX == 0)
         {
-            shiftY = -1;
-            shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
-            sendBitmap(bitmap);
+            if (Yread < UPBOUND)
+            {
+                shiftY = 1;
+                shiftPixel(myPlace[0], myPlace[1], 0, shiftY);
+                sendBitmap(bitmap);
 
-        }
-        else if (Yread > DOWNBOUND)
-        {
-            shiftY = 1;
-            shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
-            sendBitmap(bitmap);
+            }
+            else if (Yread > DOWNBOUND)
+            {
+                shiftY = -1;
+                shiftPixel(myPlace[0], myPlace[1], 0, shiftY);
+                sendBitmap(bitmap);
 
+            }
         }
-        }
-//        shiftPixel(myPlace[0], myPlace[1], shiftX , shiftY);
-//        sendBitmap(bitmap);
-
-       // sendBitmap(bitmap);
-        __bis_SR_register(LPM1_bits);         //Enter LPM1
+        __bis_SR_register(LPM3_bits);         //Enter LPM1
     }
 }
 
-int readY(void){
-    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
+int readY(void)
+{
+    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;        // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
+    ADC10AE0 |= BIT3;                          // Using Pin for adc
     // Enable ADC10, start conversion
     __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
     return ADC10MEM;
 }
 
-int readX(void){
-    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
+int readX(void)
+{
+    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;        // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
+    ADC10AE0 |= BIT0;                          // Using Pin for adc
     // Enable ADC10 A3, start conversion
     __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
     return ADC10MEM;
@@ -364,5 +364,7 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 #error Compiler not supported!
 #endif
 {
+    while ((ADC10CTL1 & ADC10BUSY) == ADC10BUSY)
+        ;
     __bic_SR_register_on_exit(LPM3_bits);
 }
