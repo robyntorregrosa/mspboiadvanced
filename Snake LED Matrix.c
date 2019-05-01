@@ -1,18 +1,22 @@
 /* Based on msp430g2xx3_wdt_02.c from the TI Examples */
 
 #include <msp430.h>
-
+#include <rand.h>
 int c = 0;                                  //Char index
 int i = 0;                                  //Led index
 static int DISPLAY_SIZE = 340;               //number of pixels in display
 
+int readX(void);
+int readY(void);
 void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
 void clearPixel(int row, int col);
 void movePixel(int row, int col, int dest_row, int dest_col);
 void shiftPixel(int row, int col, int x_shift, int y_shift);
 
-
+int coincol;
+int coinrow;
+int myPlace[] = {0,0};
 static char BRIGHTNESS = 0xE1;                 //Set LED brightness for whole bitmap
 
 unsigned char bitmap[] =
@@ -47,6 +51,15 @@ int main(void)
     IE1 |= WDTIE;                            // Enable WDT interrupt
     IE2 |= UCA0TXIE;
 
+/*------------- Seed LFSR -------------*/
+
+    // seed generator
+    ADC10CTL1 |= INCH_5 | ADC10SSEL_1;           // A5 source, ACLK as source ADC10
+    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
+    ADC10CTL0 |= ENC + ADC10SC;               // Enable ADC10, start conversion
+    __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
+    srand(ADC10MEM);
+
 /*---------------SPI--------------*/
     //Multiplex Pin 1.2 to MOSI and Pin 1.4 to CLK
     P1DIR |= BIT2 + BIT4;                                       // Set P1.2 and P1.4 to output direction
@@ -65,7 +78,13 @@ int main(void)
     __delay_cycles(1000000);
     shiftPixel(1,19,1,-1);
     j = 0;
+    setRandCoin();
     while(1) {
+        // check if you've gotten the coin
+        if (coinrow == myPlace[0] && coincol == myPlace[1]){
+            clearPixel(coinrow, coincol);
+            setRandCoin();
+        }
         /*
         j++;
         if(j > 19){
@@ -231,6 +250,16 @@ void shiftPixel(int row1, int col1, int x_shift, int y_shift){
     }
 
     movePixel(row1,col1,row1 - final_shift_y, col1 + final_shift_x);
+    myPlace[0] = row1 - final_shift_y;
+    myPlace[1] = col1 + final_shift_x;
+void setRandCoin(){
+    while (coinrow > 16){
+    coinrow = rand()-1;    // val between 0- 16
+    }
+    while(coincol > 20) {
+        coincol = rand()-1;         // val between 0- 20
+    }
+    setPixel(coinrow, coincol, 'y');
 }
 
 
@@ -265,4 +294,16 @@ void __attribute__ ((interrupt(USCIAB0TX_VECTOR))) USCIA0TX_ISR (void)
 //#pragma vector=USCIAB0TX_VECTOR
 //__interrupt void USCIA0_ISR(void)
 
+// ADC10 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=ADC10_VECTOR
+__interrupt void ADC10_timer(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
+#else
+#error Compiler not supported!
+#endif
+{
+    __bic_SR_register_on_exit(LPM3_bits);
+}
 
