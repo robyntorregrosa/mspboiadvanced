@@ -10,6 +10,7 @@ static int DISPLAY_SIZE = 340;                  //number of pixels in display
 void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
 void clearPixel(int row, int col);
+char readPixel(int row, int col);
 void movePixel(int row, int col, int dest_row, int dest_col);
 void shiftPixel(int row, int col, int x_shift, int y_shift);
 void setRandCoin();
@@ -100,7 +101,11 @@ int main(void)
     sendBitmap(bitmap);
     setPixel(myPlace[0], myPlace[1], 'g');
     __delay_cycles(1000000);
-    setRandCoin();
+    unsigned int c;
+    for (c = 10; c>0; c--){
+        setRandCoin();
+    }
+
     sendBitmap(bitmap);
 
     while (1)
@@ -109,9 +114,10 @@ int main(void)
         readXY();
         Xread = adc[0];
         Yread = adc[2];
-        if (myPlace[0] == coinrow && myPlace[1] == coincol)
+//        if (myPlace[0] == coinrow && myPlace[1] == coincol)
+        if(readPixel(myPlace[0], myPlace[1]) == 'b')
         {
-            setPixel(coinrow, coincol, 'g');                        // yum!
+            setPixel(myPlace[0], myPlace[1], 'g');                        // yum!
             setRandCoin();                                          // set out the next coin
             sendBitmap(bitmap);
         }
@@ -345,7 +351,7 @@ void setRandCoin()
 //    coincol = 31;
     coinrow = rand() % 17;    // val between 0- 16
     coincol = rand() % 20;         // val between 0- 20
-    setPixel(coinrow, coincol, 'y');
+    setPixel(coinrow, coincol, 'b');
 }
 
 // Watchdog Timer interrupt service routine
