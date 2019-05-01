@@ -68,7 +68,9 @@ int main(void)
     // joystick input X (Pin 2, A0), Y (pin 5, A3)
     P1SEL |= BIT0 + BIT3;
     ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
-    ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE; // Set up ADC
+    ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE | MSC; // Set up ADC
+    ADC10DTC1 = 0x03;                         // 3 conversions
+
     shiftX = 0;
     shiftY = 0;
 
@@ -88,7 +90,7 @@ int main(void)
 
     while (1)
     {
-
+        ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
         Xread = readX();
 
         if (Xread > LEFTBOUND)
@@ -364,7 +366,5 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 #error Compiler not supported!
 #endif
 {
-    while ((ADC10CTL1 & ADC10BUSY) == ADC10BUSY)
-        ;
     __bic_SR_register_on_exit(LPM3_bits);
 }
