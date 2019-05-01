@@ -42,6 +42,10 @@ unsigned char bitmap[] =
 
 int main(void)
 {
+    static const int LEFTBOUND = 589;
+    static const int RIGHTBOUND = 927;
+    static const int UPBOUND = 528;
+    static const int DOWNBOUND = 853;
     int j = 0;
     int k = 0;
 /*------------- Setup -------------*/
@@ -70,6 +74,10 @@ int main(void)
     UCA0CTL0 = UCCKPH + UCMSB + UCMST + UCSYNC;                //Enable USCI Module A0
     UCA0CTL1 &= ~UCSWRST;                                      //Disable reset
 
+/* --------- Setup ADC for XY ------ */
+    // joystick input X (Pin 2, A0), Y (pin 5, A3)
+    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
+
     __bis_SR_register(GIE);                   // Enable interrupts
 
 
@@ -78,13 +86,42 @@ int main(void)
     __delay_cycles(1000000);
     shiftPixel(1,19,1,-1);
     j = 0;
+    int Xread;
+    int Yread;
+    Xread = 0;
+    Yread = 0;
+    int shiftX;
+    int shiftY;
     setRandCoin();
+
     while(1) {
+        shiftX = 0;
+        shiftY = 0;
+        Xread= readX();
+        Yread= readY();
+
+        if (Xread > LEFTBOUND) {
+            shiftX = -1;
+        } else if (Xread < RIGHTBOUND) {
+            shiftX = 1;
+        }
+
+        if (Yread > UPBOUND) {
+            shiftY = -1;
+        } else if (Xread < RIGHTBOUND) {
+            shiftY = 1;
+        }
+        if (Yread > DOWNBOUND) {
+                            shiftY = 1;
+                        } else if (Yread < UPBOUND) {
+                            shiftY = -1;
+                        }
         // check if you've gotten the coin
         if (coinrow == myPlace[0] && coincol == myPlace[1]){
             clearPixel(coinrow, coincol);
             setRandCoin();
         }
+
         /*
         j++;
         if(j > 19){
@@ -252,6 +289,24 @@ void shiftPixel(int row1, int col1, int x_shift, int y_shift){
     movePixel(row1,col1,row1 - final_shift_y, col1 + final_shift_x);
     myPlace[0] = row1 - final_shift_y;
     myPlace[1] = col1 + final_shift_x;
+}
+
+int readY(void){
+    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
+    ADC10CTL0 |= ENC + ADC10SC;
+    // Enable ADC10, start conversion
+    __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
+    return ADC10MEM;
+}
+
+int readX(void){
+    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
+    ADC10CTL0 |= ENC + ADC10SC;
+    // Enable ADC10 A3, start conversion
+    __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
+    return ADC10MEM;
+}
+
 void setRandCoin(){
     while (coinrow > 16){
     coinrow = rand()-1;    // val between 0- 16
