@@ -13,13 +13,14 @@ void clearPixel(int row, int col);
 char readPixel(int row, int col);
 void movePixel(int row, int col, int dest_row, int dest_col);
 void shiftPixel(int row, int col, int x_shift, int y_shift);
-void setRandCoin();
+void setRandCoin(char color);
 int readX(void);
 int readY(void);
 
 
 int myPlace[] = {9,10};
 char nextColor;
+int resetflag = 1;
 
 int coincol;
 int coinrow;
@@ -35,7 +36,7 @@ unsigned char bitmap[] =
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //5
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //6
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //7
- ' ',' ',' ',' ',' ',' ',' ',' ',' ','1',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //8
+ ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //8
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //9
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //10
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //11
@@ -101,16 +102,22 @@ int main(void)
 
     sendBitmap(bitmap);
     __delay_cycles(1000000);
-    unsigned int c;
-    for (c = 10; c>0; c--){
-        setRandCoin();
-    }
-    setPixel(myPlace[0], myPlace[1], 'g');
 
-    sendBitmap(bitmap);
+    while (1) {
+        if (resetflag) {
+         resetflag = 0;
+         // setup stuff
+         setRandCoin('r');               // evil berry
+         unsigned int c;
+         for (c = 10; c>0; c--){
+             setRandCoin('b');           // yummy berries
+         }
 
-    while (1)
-    {
+         setPixel(myPlace[0], myPlace[1], 'g');      // me!
+
+         sendBitmap(bitmap);
+         resetflag = 0;
+        }
         shiftX=0;
         readXY();
         Xread = adc[0];
@@ -337,22 +344,46 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
 
     // check if the next pixel is coin!
     nextColor = readPixel(row + final_shift_y,col + final_shift_x);
-    if(nextColor == 'b') {
+    if (nextColor == 'b') {
        setPixel(myPlace[0], myPlace[1], 'g');                        // yum!
-       setRandCoin();                                          // set out the next coin
+       setRandCoin('b');                                          // set out the next coin
+    }
+    if (nextColor == 'r') {
+        // you lose :(
+        setPixel(myPlace[0], myPlace[1], 'r');                        // set self red
+        unsigned int r;
+        for (r = DISPLAY_SIZE; r > 0; r--){
+            setRandCoin('r');                                    // lose sequence
+            sendBitmap(bitmap);
+            __delay_cycles(1000);
+        }
+        // button to reset
+        unsigned int cc;
+        for (r = 17; r > 0; r--){
+            for (cc = 20; cc > 0; cc--){
+            clearPixel(r-1, cc-1); // lose sequence
+            sendBitmap(bitmap);
+            __delay_cycles(10000);
+            }
+            resetflag = 1;
+        }
+
+
     }
 
     movePixel(row, col, row + final_shift_y, col + final_shift_x);
     myPlace[0] = row + final_shift_y;
     myPlace[1] = col + final_shift_x;
 }
-void setRandCoin()
+
+//int checkNextPixel()
+void setRandCoin(char color)
 {
 //    coinrow = 31;
 //    coincol = 31;
     coinrow = rand() % 17;    // val between 0- 16
     coincol = rand() % 20;         // val between 0- 20
-    setPixel(coinrow, coincol, 'b');
+    setPixel(coinrow, coincol, color);
 }
 
 // Watchdog Timer interrupt service routine
