@@ -62,16 +62,24 @@ int main(void)
 
 
     setPixel(1,19,'g');
+
+    sendBitmap(bitmap);
     __delay_cycles(1000000);
-    shiftPixel(1,19,1,-1);
-    j = 0;
+    shiftPixel(1,19,1, 0);
+    sendBitmap(bitmap);
+    __delay_cycles(1000000);
+    shiftPixel(1,0,1, 0);
+    sendBitmap(bitmap);
+    j = 1;
+
     while(1) {
-        /*
-        j++;
-        if(j > 19){
-            j=0;
+
+        if(j < 0){
+            j=19;
         }
-        */
+        shiftPixel(j,1,0,-1);
+        j--;
+
         sendBitmap(bitmap);
         __bis_SR_register(LPM1_bits);         //Enter LPM1
     }
@@ -190,11 +198,10 @@ void movePixel(int row, int col, int dest_row, int dest_col){
 }
 
 /*
- * TODO: FINISH function and add wraparound cases (if too much shift one way, comes back around the other way)
  * shifts a pixel in a specified row and col in a certain x and y direction.
- * x_shift and y_shift can be negative
+ * x_shift and y_shift can be negative (- y_shift corresponds to going up)
  */
-void shiftPixel(int row1, int col1, int x_shift, int y_shift){
+void shiftPixel(int row, int col, int x_shift, int y_shift){
     int final_shift_x = 0;
     int final_shift_y = 0;
 
@@ -207,10 +214,10 @@ void shiftPixel(int row1, int col1, int x_shift, int y_shift){
         x_shift += 20;
     }
 
-    if((x_shift + col1) > 20){
-        final_shift_x = x_shift - (20-col1);
-    }else if((x_shift + col1) < 0){
-        final_shift_x = x_shift + (20-col1);
+    if((x_shift + col) > 19){
+        final_shift_x = x_shift - 20;
+    }else if((x_shift + col) < 0){
+        final_shift_x = x_shift + (20-col);
     }else{
         final_shift_x = x_shift;
     }
@@ -222,15 +229,15 @@ void shiftPixel(int row1, int col1, int x_shift, int y_shift){
     while(y_shift < -17){
         y_shift += 17;
     }
-    if((y_shift + row1) > 17){
-        final_shift_y = y_shift - (17-row1);
-    }else if((y_shift + row1) < 0){
-        final_shift_y = y_shift + (17-row1);
+    if((y_shift + row) > 16){
+        final_shift_y = y_shift - 17;
+    }else if((y_shift + row) < 0){
+        final_shift_y = y_shift + (17-row);
     }else{
         final_shift_y = y_shift;
     }
 
-    movePixel(row1,col1,row1 - final_shift_y, col1 + final_shift_x);
+    movePixel(row,col,row + final_shift_y, col + final_shift_x);
 }
 
 
