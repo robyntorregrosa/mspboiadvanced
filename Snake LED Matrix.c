@@ -75,7 +75,7 @@ int main(void)
     while(1) {
 
         if(j < 0){
-            j=19;
+            j=16;
         }
         shiftPixel(j,1,0,-1);
         j--;
