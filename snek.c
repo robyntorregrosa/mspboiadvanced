@@ -87,7 +87,8 @@ int main(void)
     Yread = 0;
     int shiftX;
     int shiftY;
-
+    shiftX = 0;
+    shiftY = 0;
     while (1)
     {
         ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
