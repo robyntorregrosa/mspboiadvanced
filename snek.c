@@ -1,27 +1,21 @@
 /* Based on msp430g2xx3_wdt_02.c from the TI Examples */
 
 #include <msp430.h>
-#include <rand.h>
 
 int c = 0;                                  //Char index
 int i = 0;                                  //Led index
 static int DISPLAY_SIZE = 340;               //number of pixels in display
 
+int readX(void);
+int readY(void);
 void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
 void clearPixel(int row, int col);
 void movePixel(int row, int col, int dest_row, int dest_col);
 void shiftPixel(int row, int col, int x_shift, int y_shift);
-void setRandCoin();
-int readX();
-int readY();
-
-
 int myPlace[] = {9,10};
 
-int coincol;
-int coinrow;
-static char BRIGHTNESS = 0xE1;                 //Set LED brightness for whole bitmap
+static char BRIGHTNESS = 0xE1;             //Set LED brightness for whole bitmap
 
 unsigned char bitmap[] =
 //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19
@@ -47,10 +41,12 @@ unsigned char bitmap[] =
 int main(void)
 {
 
-    static const int LEFTBOUND = 700;
-    static const int RIGHTBOUND = 300;
-    static const int DOWNBOUND = 580;
-    static const int UPBOUND = 525;
+    static const int LEFTBOUND = 589;
+    static const int RIGHTBOUND = 927;
+    static const int UPBOUND = 650;
+    static const int DOWNBOUND = 800;
+//    int j = 0;
+//    int k = 0;
     /*------------- Setup -------------*/
     BCSCTL3 |= LFXT1S_2;                      // ACLK = VLO
     WDTCTL = WDT_ADLY_16;                    // WDT 16ms, ACLK, interval timer
@@ -58,15 +54,7 @@ int main(void)
     IE1 |= WDTIE;                            // Enable WDT interrupt
     IE2 |= UCA0TXIE;
 
-/*------------- Seed LFSR -------------*/
-    // seed generator
-//    ADC10CTL1 |= INCH_5 | ADC10SSEL_1;           // A5 source, ACLK as source ADC10
-//    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
-//    ADC10CTL0 |= ENC + ADC10SC;               // Enable ADC10, start conversion
-//    __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
-//    srand(ADC10MEM);                            // seed the lfsr
-    srand(100);
-/*---------------SPI--------------*/
+    /*---------------SPI--------------*/
     //Multiplex Pin 1.2 to MOSI and Pin 1.4 to CLK
     P1DIR |= BIT2 + BIT4;               // Set P1.2 and P1.4 to output direction
     P1SEL = BIT2 + BIT4;
@@ -76,45 +64,42 @@ int main(void)
     UCA0CTL0 = UCCKPH + UCMSB + UCMST + UCSYNC;          //Enable USCI Module A0
     UCA0CTL1 &= ~UCSWRST;                                      //Disable reset
 
-/* --------- Setup ADC for XY ------ */
-    // joystick input X (Pin 2 (P1.0), A0), Y (pin 5 (P1.3), A3)
+    /* --------- Setup ADC for XY ------ */
+    // joystick input X (Pin 2, A0), Y (pin 5, A5)
     ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE;
 
     __bis_SR_register(GIE);                   // Enable interrupts
 
 
-    sendBitmap(bitmap);
     setPixel(myPlace[0], myPlace[1], 'g');
-    setRandCoin();                                          // set out the next coin
+    __delay_cycles(1000000);
+    sendBitmap(bitmap);
+
     int Xread;
     int Yread;
     Xread = 0;
     Yread = 0;
     int shiftX;
     int shiftY;
-    while(1) {
 
-        if (myPlace[0] == coinrow && myPlace[1] == coincol){
-            setPixel(coinrow, coincol, 'g');                        // yum!
-            setRandCoin();                                          // set out the next coin
-        }
-
+    while (1)
+   {
         shiftX = 0;
         shiftY = 0;
         Xread = readX();
 
 
-        if (Xread > LEFTBOUND)
+        if (Xread < LEFTBOUND)
         {
-            shiftX = 1;
+            shiftX = -1;
             shiftPixel(myPlace[0], myPlace[1], shiftX , 0);
             sendBitmap(bitmap);
 
 
         }
-        else if (Xread < RIGHTBOUND)
+        else if (Xread > RIGHTBOUND)
         {
-            shiftX = -1;
+            shiftX = 1;
             shiftPixel(myPlace[0], myPlace[1], shiftX , 0);
             sendBitmap(bitmap);
 
@@ -123,37 +108,39 @@ int main(void)
         Yread = readY();
 
         if(shiftX == 0 ){
-            if (Yread > UPBOUND)
-            {
-                shiftY = 1;
-                shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
-                sendBitmap(bitmap);
+        if (Yread < UPBOUND)
+        {
+            shiftY = -1;
+            shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
+            sendBitmap(bitmap);
 
-            }
-            else if (Yread > DOWNBOUND)
-            {
-                shiftY = -1;
-                shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
-                sendBitmap(bitmap);
-
-            }
         }
+        else if (Yread > DOWNBOUND)
+        {
+            shiftY = 1;
+            shiftPixel(myPlace[0], myPlace[1], 0 , shiftY);
+            sendBitmap(bitmap);
 
-        sendBitmap(bitmap);
+        }
+        }
+//        shiftPixel(myPlace[0], myPlace[1], shiftX , shiftY);
+//        sendBitmap(bitmap);
+
+       // sendBitmap(bitmap);
         __bis_SR_register(LPM1_bits);         //Enter LPM1
     }
 }
 
-int readY(){
-    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
+int readY(void){
+    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10, start conversion
     __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
     return ADC10MEM;
 }
 
-int readX(){
-    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;           // A3 source, ACLK as source ADC10
+int readX(void){
+    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;           // A0 source, ACLK as source ADC10
     ADC10CTL0 |= ENC + ADC10SC;
     // Enable ADC10 A3, start conversion
     __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
@@ -281,7 +268,6 @@ void movePixel(int row, int col, int dest_row, int dest_col)
  * shifts a pixel in a specified row and col in a certain x and y direction.
  * x_shift and y_shift can be negative (- y_shift corresponds to going up)
  */
-
 void shiftPixel(int row, int col, int x_shift, int y_shift)
 {
     int final_shift_x = 0;
@@ -320,26 +306,23 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
     {
         y_shift += 17;
     }
-    if((y_shift + row) > 16){
+    if ((y_shift + row) > 16)
+    {
         final_shift_y = y_shift - 17;
-    }else if((y_shift + row) < 0){
-        final_shift_y = y_shift + (17-row);
-    }else{
+    }
+    else if ((y_shift + row) < 0)
+    {
+        final_shift_y = y_shift + (17 - row);
+    }
+    else
+    {
         final_shift_y = y_shift;
     }
 
-    movePixel(row,col,row + final_shift_y, col + final_shift_x);
+    movePixel(row, col, row + final_shift_y, col + final_shift_x);
     myPlace[0] = row + final_shift_y;
     myPlace[1] = col + final_shift_x;
 }
-void setRandCoin(){
-//    coinrow = 31;
-//    coincol = 31;
-    coinrow = rand() % 17;    // val between 0- 16
-    coincol = rand() % 20;         // val between 0- 20
-    setPixel(coinrow, coincol, 'y');
-}
-
 
 // Watchdog Timer interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
@@ -371,7 +354,6 @@ void __attribute__ ((interrupt(USCIAB0TX_VECTOR))) USCIA0TX_ISR (void)
 
 //#pragma vector=USCIAB0TX_VECTOR
 //__interrupt void USCIA0_ISR(void)
-
 // ADC10 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector=ADC10_VECTOR
@@ -384,4 +366,3 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 {
     __bic_SR_register_on_exit(LPM3_bits);
 }
-
