@@ -69,8 +69,7 @@ int main(void)
     P1SEL |= BIT0 + BIT3;
     ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
     ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE; // Set up ADC
-    shiftX = 0;
-    shiftY = 0;
+
 
     __bis_SR_register(GIE);               // Enable interrupts
 
@@ -85,7 +84,8 @@ int main(void)
     Yread = 0;
     int shiftX;
     int shiftY;
-
+    shiftX = 0;
+    shiftY = 0;
     while (1)
     {
 
@@ -364,7 +364,7 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 #error Compiler not supported!
 #endif
 {
-    while ((ADC10CTL1 & ADC10BUSY) == ADC10BUSY)
-        ;
+//    while ((ADC10CTL1 & ADC10BUSY) == ADC10BUSY)
+//        ;
     __bic_SR_register_on_exit(LPM3_bits);
 }
