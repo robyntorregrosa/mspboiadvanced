@@ -19,6 +19,7 @@ int readY(void);
 
 
 int myPlace[] = {9,10};
+char nextColor;
 
 int coincol;
 int coinrow;
@@ -99,12 +100,12 @@ int main(void)
     srand(seed);
 
     sendBitmap(bitmap);
-    setPixel(myPlace[0], myPlace[1], 'g');
     __delay_cycles(1000000);
     unsigned int c;
     for (c = 10; c>0; c--){
         setRandCoin();
     }
+    setPixel(myPlace[0], myPlace[1], 'g');
 
     sendBitmap(bitmap);
 
@@ -114,13 +115,6 @@ int main(void)
         readXY();
         Xread = adc[0];
         Yread = adc[2];
-//        if (myPlace[0] == coinrow && myPlace[1] == coincol)
-        if(readPixel(myPlace[0], myPlace[1]) == 'b')
-        {
-            setPixel(myPlace[0], myPlace[1], 'g');                        // yum!
-            setRandCoin();                                          // set out the next coin
-            sendBitmap(bitmap);
-        }
 
         if (Xread > LEFTBOUND)
         {
@@ -339,6 +333,13 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
     else
     {
         final_shift_y = y_shift;
+    }
+
+    // check if the next pixel is coin!
+    nextColor = readPixel(row + final_shift_y,col + final_shift_x);
+    if(nextColor == 'b') {
+       setPixel(myPlace[0], myPlace[1], 'g');                        // yum!
+       setRandCoin();                                          // set out the next coin
     }
 
     movePixel(row, col, row + final_shift_y, col + final_shift_x);
