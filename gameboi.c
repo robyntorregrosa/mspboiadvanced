@@ -6,6 +6,7 @@
 int c = 0;                                      //Char index
 int i = 0;                                      //Led index
 static int DISPLAY_SIZE = 340;                  //number of pixels in display
+#define UPPER 100
 
 void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
@@ -16,6 +17,7 @@ void shiftPixel(int row, int col, int x_shift, int y_shift);
 void setRandCoin(char color);
 int readX(void);
 int readY(void);
+void wait(int t);
 
 
 int myPlace[] = {9,10};
@@ -46,7 +48,7 @@ unsigned char bitmap[] =
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //15
  ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',   //16
 };
-unsigned int adc[6] = { 0 };  // This will hold the x,y and z axis values
+int adc[6] = { 0 };  // This will hold the x,y and z axis values
 unsigned int X_Axis = 0;
 unsigned int Y_Axis = 0;
 unsigned int seed = 0;
@@ -75,6 +77,9 @@ int main(void)
     IE1 |= WDTIE;                                               // Enable WDT interrupt
     IE2 |= UCA0TXIE;
 
+    // setup timer A0 for timing length
+    TA0CTL = TASSEL_2 | MC_1 | ID_3;            // SMCLK from VLO 12KHz, up mode, Timer A0
+    TA0CCR0 = UPPER>>3;                         // 1/8 MHz clock, divide by 16
 
     /*---------------SPI--------------*/
                                                                 //Multiplex Pin 1.2 to MOSI and Pin 1.4 to CLK
@@ -90,9 +95,9 @@ int main(void)
     // seed generator
     ADC10CTL0 &= ~ENC;                                          // STOP SAMPLING
     ADC10CTL1 |= INCH_5 | ADC10SSEL_1 | CONSEQ_1;               // A5 source, ACLK as source ADC10
-    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE |MSC;
+    ADC10CTL0 |= ADC10SHT_3 | ADC10ON | ADC10IE | MSC;
     ADC10AE0  |= BIT5;
-    ADC10CTL0 |= ENC + ADC10SC;                                 // Sampling and conversion start
+    ADC10CTL0 |= ENC | ADC10SC;                                 // Sampling and conversion start
     ADC10DTC1 = 0x6;                                           // 3 conversions
     ADC10AE0  |= 0b101001;                                      // Disable digital I/O on P1.0 to P1.2
     __bis_SR_register(LPM3_bits + GIE);                         // Enter LPM1 w/interrupt
@@ -101,8 +106,8 @@ int main(void)
     srand(seed);
 
     sendBitmap(bitmap);
-    __delay_cycles(1000000);
 
+    wait(5);
     while (1) {
         if (resetflag) {
          resetflag = 0;
@@ -161,7 +166,7 @@ void readXY(void)
 {
     ADC10CTL0 &= ~ENC;
     while (ADC10CTL1 & BUSY);               // Wait if ADC10 core is active
-    ADC10SA = (unsigned int) adc;           // Copies data in ADC10SA to unsigned int adc array
+    ADC10SA = (int) adc;           // Copies data in ADC10SA to unsigned int adc array
     ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
 
     X_Axis = adc[0];                        // adc array 0 copied to the variable X_Axis
@@ -178,21 +183,21 @@ void sendBitmap(unsigned char* bitmapping)
     for (i = 3; i >= 0; i--)
     {
         UCA0TXBUF = 0x00;              //Send start frame
-        __delay_cycles(10);
+        wait(1);
     }
     for (c = 0; c < DISPLAY_SIZE; c++)
     {        //Sends colors for each pixel in bitmap
         UCA0TXBUF = BRIGHTNESS;        //Send brightness byte on transmit buffer
-        __delay_cycles(10);
+        wait(1);
         switch (bitmapping[c])
         {
         case 'r':       //Red
             UCA0TXBUF = 0x00;              //Send blue char on transmit buffer
-            __delay_cycles(10);
+            wait(2);
             UCA0TXBUF = 0x00;              //Send green char on transmit buffer
-            __delay_cycles(10);
+            wait(2);
             UCA0TXBUF = 0xFF;              //Send red char on transmit buffer
-            __delay_cycles(10);
+            wait(2);
             break;
         case 'o':       //Orange
             UCA0TXBUF = 0x00;              //Send blue char on transmit buffer
@@ -355,7 +360,7 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
         for (r = DISPLAY_SIZE; r > 0; r--){
             setRandCoin('r');                                    // lose sequence
             sendBitmap(bitmap);
-            __delay_cycles(1000);
+            wait(2);
         }
         // button to reset
         unsigned int cc;
@@ -363,7 +368,7 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
             for (cc = 20; cc > 0; cc--){
             clearPixel(r-1, cc-1); // lose sequence
             sendBitmap(bitmap);
-            __delay_cycles(10000);
+            wait(2);
             }
             resetflag = 1;
         }
@@ -385,6 +390,29 @@ void setRandCoin(char color)
     coincol = rand() % 20;         // val between 0- 20
     setPixel(coinrow, coincol, color);
 }
+
+void wait(int t){
+    int i;
+    for (i = t; i >0; i--){
+        TA0CCTL0 = CCIE; // enable note duration interrupt
+        __bis_SR_register(LPM0_bits + GIE);     // Enter LPM0 w/interrupt
+    }
+}
+
+// Timer A0 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void Timer_A0 (void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER0_A1_VECTOR))) Timer_A (void)
+#else
+#error Compiler not supported!
+#endif
+{
+    TA0CCTL0 &= ~CCIE;                       // disable timer A0 interrupt (note duration)
+    __bic_SR_register_on_exit(LPM0_bits);
+}
+
 
 // Watchdog Timer interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
@@ -428,26 +456,3 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 {
     __bic_SR_register_on_exit(LPM3_bits);
 }
-//int readY(void)
-//{
-//    ADC10CTL0 &= ~ENC;                                              // STOP SAMPLING
-//    ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE;    // Set up ADC
-//    ADC10CTL1 |= INCH_3 | ADC10SSEL_1;                              // A0 source, ACLK as source ADC10
-//    ADC10AE0 |= BIT3;                                               // Using Pin for adc
-//    ADC10CTL0 |= ENC + ADC10SC;
-//    // Enable ADC10, start conversion
-//    __bis_SR_register(LPM3_bits + GIE);                             // Enter LPM1 w/interrupt
-//    return ADC10MEM;
-//}
-//
-//int readX(void)
-//{
-//    ADC10CTL0 &= ~ENC;                         // STOP SAMPLING
-//    ADC10CTL0 = SREF_0 | ADC10SHT_3 | REFON | ADC10ON | ADC10IE; // Set up ADC
-//    ADC10CTL1 |= INCH_0 | ADC10SSEL_1;        // A0 source, ACLK as source ADC10
-//    ADC10AE0 |= BIT0;                          // Using Pin for adc
-//    ADC10CTL0 |= ENC + ADC10SC;
-//    // Enable ADC10 A3, start conversion
-//    __bis_SR_register(LPM3_bits + GIE);      // Enter LPM1 w/interrupt
-//    return ADC10MEM;
-//}
