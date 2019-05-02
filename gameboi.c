@@ -19,10 +19,28 @@ int readX(void);
 int readY(void);
 void wait(int t);
 
+// SNAKE STUFF
+int isEmpty();
+int isFull();
+void enSnake(int currRow, int currCol);
+void popSnake();//int *row, int *col);
 
-int myPlace[] = {9,10};
+//int myPlace[] = {9,10};
 char nextColor;
 int resetflag = 1;
+
+#define CAPACITY 4     // max number of pixels in snake
+// a FIFO Snake
+int SNAKE[CAPACITY<<1] = {9, 10};
+
+int *headr = &SNAKE[0];
+int *headc = &SNAKE[1];
+
+int *tailr = &SNAKE[0];
+int *tailc = &SNAKE[1];
+
+int SNAKEsize = 0;       // number of pixels snake takes up
+
 
 int coincol;
 int coinrow;
@@ -118,7 +136,7 @@ int main(void)
              setRandCoin('b');           // yummy berries
          }
 
-         setPixel(myPlace[0], myPlace[1], 'g');      // me!
+         setPixel(*headr, *headc, 'g');      // me!
 
          sendBitmap(bitmap);
          resetflag = 0;
@@ -131,13 +149,13 @@ int main(void)
         if (Xread > LEFTBOUND)
         {
             shiftX = 1;
-            shiftPixel(myPlace[0], myPlace[1], shiftX, 0);
+            shiftPixel(*headr, *headc, shiftX, 0);
             sendBitmap(bitmap);
         }
         else if (Xread < RIGHTBOUND)
         {
             shiftX = -1;
-            shiftPixel(myPlace[0], myPlace[1], shiftX, 0);
+            shiftPixel(*headr, *headc, shiftX, 0);
             sendBitmap(bitmap);
         }
 
@@ -147,14 +165,14 @@ int main(void)
             if (Yread < UPBOUND)
             {
                 shiftY = 1;
-                shiftPixel(myPlace[0], myPlace[1], 0, shiftY);
+                shiftPixel(*headr, *headc, 0, shiftY);
                 sendBitmap(bitmap);
 
             }
             else if (Yread > DOWNBOUND)
             {
                 shiftY = -1;
-                shiftPixel(myPlace[0], myPlace[1], 0, shiftY);
+                shiftPixel(*headr, *headc, 0, shiftY);
                 sendBitmap(bitmap);
 
             }
@@ -350,12 +368,12 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
     // check if the next pixel is coin!
     nextColor = readPixel(row + final_shift_y,col + final_shift_x);
     if (nextColor == 'b') {
-       setPixel(myPlace[0], myPlace[1], 'g');                        // yum!
+        enSnake(row + final_shift_y,  col + final_shift_x);
        setRandCoin('b');                                          // set out the next coin
     }
     if (nextColor == 'r') {
         // you lose :(
-        setPixel(myPlace[0], myPlace[1], 'r');                        // set self red
+        setPixel(*headr, *headc, 'r');                        // set self red
         unsigned int r;
         for (r = DISPLAY_SIZE; r > 0; r--){
             setRandCoin('r');                                    // lose sequence
@@ -375,10 +393,11 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
 
 
     }
-
-    movePixel(row, col, row + final_shift_y, col + final_shift_x);
-    myPlace[0] = row + final_shift_y;
-    myPlace[1] = col + final_shift_x;
+    popSnake();
+    enSnake(row + final_shift_y,  col + final_shift_x);
+//    movePixel(row, col, row + final_shift_y, col + final_shift_x);
+//    myPlace[0] = row + final_shift_y;
+//    myPlace[1] = col + final_shift_x;
 }
 
 //int checkNextPixel()
@@ -455,4 +474,41 @@ void __attribute__ ((interrupt(ADC10IFG))) watchdog_timer (void)
 #endif
 {
     __bic_SR_register_on_exit(LPM3_bits);
+}
+
+
+int isFull() {
+    return SNAKEsize == CAPACITY;
+}
+
+int isEmpty() {
+    return SNAKEsize == 0;
+}
+
+// It changes head and size
+void enSnake(int currRow, int currCol) {
+    if (!isFull()){
+        // shift towards tail
+        int i;
+        for (i = SNAKEsize; i > 0; i--){
+            *tailc = *tailr;
+            tailc--; tailr--;
+        }
+        // add to the head
+        *headr = currRow;
+        *headc = currCol;
+        setPixel(*headr, *headc, 'g');
+        SNAKEsize += 1;
+    }
+}
+
+// remove from tail of snake
+void popSnake(){//(int *row, int *col){
+    if (!isEmpty()){
+        clearPixel(*tailr, *tailc);
+        *tailr = -1;
+        *tailc = -1;
+
+        SNAKEsize -= 1;
+    }
 }
