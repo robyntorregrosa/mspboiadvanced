@@ -7,7 +7,7 @@ int c = 0;                                      //Char index
 int i = 0;                                      //Led index
 static int DISPLAY_SIZE = 340;                  //number of pixels in display
 #define UPPER 100
-
+#define NULL 0
 void sendBitmap(unsigned char* bitmapping);
 void setPixel(int row, int col, char color);
 void clearPixel(int row, int col);
@@ -29,17 +29,17 @@ void popSnake();//int *row, int *col);
 char nextColor;
 int resetflag = 1;
 
-#define CAPACITY 4     // max number of pixels in snake
+#define CAPACITY 2     // max number of pixels in snake
 // a FIFO Snake
 int SNAKE[CAPACITY<<1] = {9, 10};
 
 int *headr = &SNAKE[0];
 int *headc = &SNAKE[1];
 
-int *tailr = &SNAKE[0];
-int *tailc = &SNAKE[1];
+int * tailr = &SNAKE[0];
+int * tailc = &SNAKE[1];
 
-int SNAKEsize = 0;       // number of pixels snake takes up
+int SNAKEsize = 3;       // number of pixels snake takes up
 
 
 int coincol;
@@ -132,7 +132,7 @@ int main(void)
          // setup stuff
          setRandCoin('r');               // evil berry
          unsigned int c;
-         for (c = 10; c>0; c--){
+         for (c = 3; c>0; c--){
              setRandCoin('b');           // yummy berries
          }
 
@@ -368,7 +368,10 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
     // check if the next pixel is coin!
     nextColor = readPixel(row + final_shift_y,col + final_shift_x);
     if (nextColor == 'b') {
-        enSnake(row + final_shift_y,  col + final_shift_x);
+       enSnake(row + final_shift_y,  row + final_shift_y);
+       popSnake();
+
+//       enSnake(row,  col);
        setRandCoin('b');                                          // set out the next coin
     }
     if (nextColor == 'r') {
@@ -378,7 +381,7 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
         for (r = DISPLAY_SIZE; r > 0; r--){
             setRandCoin('r');                                    // lose sequence
             sendBitmap(bitmap);
-            wait(2);
+            wait(1);
         }
         // button to reset
         unsigned int cc;
@@ -386,15 +389,16 @@ void shiftPixel(int row, int col, int x_shift, int y_shift)
             for (cc = 20; cc > 0; cc--){
             clearPixel(r-1, cc-1); // lose sequence
             sendBitmap(bitmap);
-            wait(2);
+            wait(1);
             }
             resetflag = 1;
         }
 
 
-    }
-    popSnake();
+    } else {
     enSnake(row + final_shift_y,  col + final_shift_x);
+    popSnake();
+    }
 //    movePixel(row, col, row + final_shift_y, col + final_shift_x);
 //    myPlace[0] = row + final_shift_y;
 //    myPlace[1] = col + final_shift_x;
@@ -488,17 +492,26 @@ int isEmpty() {
 // It changes head and size
 void enSnake(int currRow, int currCol) {
     if (!isFull()){
-        // shift towards tail
-        int i;
-        for (i = SNAKEsize; i > 0; i--){
-            *tailc = *tailr;
-            tailc--; tailr--;
+        for(i=(CAPACITY<<1)-1;i>0;i--)
+        {
+          SNAKE[i]=SNAKE[i-1];
         }
-        // add to the head
-        *headr = currRow;
-        *headc = currCol;
-        setPixel(*headr, *headc, 'g');
-        SNAKEsize += 1;
+        SNAKE[0]= currCol;
+
+        for(i=(CAPACITY<<1)-1;i>0;i--)
+        {
+          SNAKE[i]=SNAKE[i-1];
+        }
+        SNAKE[0]= currRow;
+
+        SNAKEsize +=1;
+
+        setPixel(SNAKE[0], SNAKE[1], 'g');
+//        setPixel(currRow, currCol, 'g');
+
+        tailr++; tailc++;
+        tailr++; tailc++;
+
     }
 }
 
@@ -508,7 +521,10 @@ void popSnake(){//(int *row, int *col){
         clearPixel(*tailr, *tailc);
         *tailr = -1;
         *tailc = -1;
-
+        if (SNAKEsize > 1){
+            tailr--; tailr--;
+            tailc--; tailc--;
+        }
         SNAKEsize -= 1;
     }
 }
